@@ -1,0 +1,218 @@
+/* polish.css — Global motion + atmosphere layer applied site-wide. */
+
+/* ── Smooth scroll & richer defaults ────────────────────────── */
+html { scroll-behavior: smooth; }
+body {
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern', 'liga', 'calt', 'ss01';
+}
+
+/* Reduce motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Selection ──────────────────────────────────────────────── */
+::selection { background: var(--color-lemon-light); color: var(--color-near-black); }
+
+/* ── Marquee keyframes ──────────────────────────────────────── */
+@keyframes vj-marquee {
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(-50%,0,0); }
+}
+
+/* ── Slow orb drift keyframes ──────────────────────────────── */
+@keyframes vj-drift-0 {
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(80px,-60px) scale(1.18); }
+}
+@keyframes vj-drift-1 {
+  0%   { transform: translate(0,0) scale(1.05); }
+  100% { transform: translate(-100px,40px) scale(0.92); }
+}
+@keyframes vj-drift-2 {
+  0%   { transform: translate(0,0) scale(0.95); }
+  100% { transform: translate(60px,80px) scale(1.12); }
+}
+
+/* ── Aurora gradient sheen for dark sections ───────────────── */
+@keyframes vj-aurora {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* ── Subtle pulse for live indicators ──────────────────────── */
+@keyframes vj-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(1.18); }
+}
+
+/* ── Soft float for hero artifacts ─────────────────────────── */
+@keyframes vj-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+/* ── Shimmer for skeletons / underlines ────────────────────── */
+@keyframes vj-shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position:  200% 0; }
+}
+
+/* ── Underline trick: animated link underline ───────────────── */
+.vj-link {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  display: inline-block;
+}
+.vj-link::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -3px;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 480ms cubic-bezier(.2,.8,.2,1);
+}
+.vj-link:hover::after { transform: scaleX(1); transform-origin: left center; }
+
+/* ── Magnetic / press button polish ────────────────────────── */
+.vj-press { transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 240ms ease, filter 240ms ease; }
+.vj-press:hover { filter: brightness(1.04); }
+.vj-press:active { transform: translateY(1px) scale(0.985); }
+
+/* ── Card hover lift ───────────────────────────────────────── */
+.vj-card {
+  transition: transform 420ms cubic-bezier(.2,.8,.2,1), box-shadow 420ms ease, border-color 240ms ease;
+  will-change: transform;
+}
+.vj-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(48,47,56,0.14);
+}
+
+/* ── Image vignette on photos ──────────────────────────────── */
+.vj-vignette { position: relative; overflow: hidden; }
+.vj-vignette::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 70%, transparent 55%, rgba(30,30,35,0.18) 100%);
+  pointer-events: none;
+}
+
+/* ── Cohesive route transition ─────────────────────────────── */
+.route-fade {
+  animation: vj-route 520ms cubic-bezier(.16,.84,.44,1);
+}
+@keyframes vj-route {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ── Section eyebrow rule ──────────────────────────────────── */
+.vj-eyebrow-rule {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--color-fg-secondary);
+}
+.vj-eyebrow-rule::before {
+  content: ''; width: 32px; height: 1px; background: currentColor; opacity: .5;
+}
+
+/* ── Better focus ring (less harsh) ────────────────────────── */
+button:focus-visible, a:focus-visible, input:focus, textarea:focus, select:focus {
+  outline: 2px solid var(--color-lavender-oil);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ── Tabular nums for prices everywhere ────────────────────── */
+.vj-num { font-variant-numeric: tabular-nums; }
+
+/* ── Slow rotate for badge stamps ──────────────────────────── */
+@keyframes vj-rotate { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+.vj-rotate-slow { animation: vj-rotate 38s linear infinite; }
+
+/* ── Hide a thing while it animates in ─────────────────────── */
+.vj-mask-clip { overflow: hidden; }
+
+/* ── Vivid hover state for primary buttons ─────────────────── */
+.vj-cta-primary { position: relative; overflow: hidden; isolation: isolate; }
+.vj-cta-primary::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 700ms cubic-bezier(.2,.8,.2,1);
+  z-index: -1;
+}
+.vj-cta-primary:hover::before { transform: translateX(120%); }
+
+/* ── Numeric pin badge (for stat eyebrows) ─────────────────── */
+.vj-pin {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 999px;
+  background: var(--color-near-black); color: var(--color-lemon-light);
+  font-size: 10.5px; font-weight: 800; letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Improved scrollbar (lighter) ──────────────────────────── */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(180,142,249,0.30);
+  border: 3px solid var(--color-bg);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(180,142,249,0.55); }
+
+/* ── Hairline borders ──────────────────────────────────────── */
+.vj-hairline { box-shadow: inset 0 0 0 1px var(--color-border); }
+
+/* ── Soft hover scale for buttons (apply on icon-only) ─────── */
+.vj-icon-btn {
+  transition: background 220ms ease, transform 220ms cubic-bezier(.2,.8,.2,1);
+}
+.vj-icon-btn:hover { background: var(--color-lavender-xlight); transform: translateY(-1px); }
+
+/* ── Mark-style highlighter for inline accents ─────────────── */
+.vj-mark {
+  background: linear-gradient(180deg, transparent 62%, var(--color-lemon-pale) 62%, var(--color-lemon-pale) 92%, transparent 92%);
+  padding: 0 2px;
+}
+
+/* ── Editorial drop cap ────────────────────────────────────── */
+.vj-dropcap::first-letter {
+  font-size: 4.4em; font-weight: 900; line-height: 0.85;
+  float: left; padding: 6px 12px 0 0;
+  color: var(--color-lavender-oil);
+  font-feature-settings: 'ss01';
+}
+
+/* ── Pretty wrap for headlines ─────────────────────────────── */
+h1, h2, h3, .h1, .h2, .h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+/* ── Sticky-header backdrop blur fallback ──────────────────── */
+.vj-glass {
+  background: rgba(243,240,250,0.72);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+}
+.vj-glass-dark {
+  background: rgba(30,30,35,0.72);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+}

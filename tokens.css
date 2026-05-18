@@ -1,0 +1,228 @@
+/*
+ * VanJunge Design System — Colors & Typography
+ * Generated from: 240112_Van_Junge_DesigGuide.pdf + https://www.vanjunge.com
+ * Design by Barbora Demovič, January 2024
+ */
+
+/* ─── Local Fonts ────────────────────────────────────────── */
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-VariableFont_opsz_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Italic-VariableFont_opsz_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ─── Base Color Tokens ──────────────────────────────────── */
+:root {
+  /* Brand palette — named as in the design guide */
+
+  /* "Lavender Oil" accent */
+  --color-lavender-oil:        #b48ef9;   /* primary accent, buttons, highlights */
+  --color-lavender-light:      #d5bfff;   /* light lavender, logo light variant */
+  --color-lavender-xlight:     #e6d9ff;   /* very light lavender, hover surfaces */
+  --color-lavender-bg:         #f3f0fa;   /* near-white with lavender tint, backgrounds */
+
+  /* "Lemon Light" accent */
+  --color-lemon-light:         #edff66;   /* primary accent (dark-bg), buttons, highlights */
+  --color-lemon-pale:          #f4ff9e;   /* light lemon, surfaces */
+
+  /* Dark / neutrals — purple-tinged */
+  --color-dark:                #302f38;   /* body text on light, headlines on light */
+  --color-mid:                 #656785;   /* secondary text, links, hover states */
+  --color-near-black:          #1e1e23;   /* darkest text, primary text on light */
+
+  /* ─── Semantic Color Tokens ─────────────────────────── */
+  --color-bg:                  #f3f0fa;   /* page background (off-white lavender) */
+  --color-bg-dark:             #1e1e23;   /* dark section background */
+  --color-bg-card:             #ffffff;   /* card surfaces */
+  --color-bg-accent:           var(--color-lavender-xlight);
+
+  --color-fg:                  var(--color-near-black);   /* primary foreground */
+  --color-fg-secondary:        var(--color-mid);          /* secondary/muted text */
+  --color-fg-on-dark:          var(--color-lavender-bg);  /* text on dark backgrounds */
+
+  --color-accent:              var(--color-lavender-oil); /* primary accent (light bg) */
+  --color-accent-alt:          var(--color-lemon-light);  /* secondary accent (dark bg) */
+  --color-accent-hover:        var(--color-mid);          /* hover on interactive elements */
+
+  --color-border:              var(--color-lavender-xlight);
+  --color-border-dark:         rgba(101, 103, 133, 0.3);
+
+  /* ─── Gradient ──────────────────────────────────────── */
+  /* "Dusk Dawn" — the signature brand gradient */
+  --gradient-dusk-dawn: linear-gradient(
+    160deg,
+    var(--color-lavender-light) 0%,
+    var(--color-lavender-bg)    40%,
+    var(--color-lemon-pale)     100%
+  );
+  --gradient-dusk-dawn-vivid: linear-gradient(
+    160deg,
+    var(--color-lavender-oil)   0%,
+    var(--color-lavender-light) 50%,
+    var(--color-lemon-light)    100%
+  );
+  --gradient-dark: linear-gradient(
+    160deg,
+    #302f38 0%,
+    #1e1e23 100%
+  );
+}
+
+/* ─── Typography Tokens ──────────────────────────────────── */
+:root {
+  --font-primary:   'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Scale */
+  --text-xs:    0.75rem;    /* 12px */
+  --text-sm:    0.875rem;   /* 14px */
+  --text-base:  1rem;       /* 16px */
+  --text-lg:    1.125rem;   /* 18px */
+  --text-xl:    1.25rem;    /* 20px */
+  --text-2xl:   1.5rem;     /* 24px */
+  --text-3xl:   2rem;       /* 32px */
+  --text-4xl:   2.5rem;     /* 40px */
+  --text-5xl:   3.5rem;     /* 56px */
+  --text-6xl:   4.5rem;     /* 72px */
+
+  /* Leading */
+  --leading-tight:   1.1;
+  --leading-snug:    1.25;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.65;
+
+  /* Tracking */
+  --tracking-tight:  -0.02em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.04em;
+  --tracking-widest:  0.12em;
+
+  /* Weights */
+  --weight-regular:    400;
+  --weight-medium:     500;
+  --weight-bold:       700;
+  --weight-extrabold:  800;
+  --weight-black:      900;
+}
+
+/* ─── Semantic Type Styles ───────────────────────────────── */
+h1, .h1 {
+  font-family: var(--font-primary);
+  font-size: var(--text-5xl);
+  font-weight: var(--weight-extrabold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-fg);
+}
+
+h2, .h2 {
+  font-family: var(--font-primary);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-fg);
+}
+
+h3, .h3 {
+  font-family: var(--font-primary);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+  color: var(--color-fg);
+}
+
+h4, .h4 {
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  color: var(--color-fg);
+}
+
+p, .body {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-relaxed);
+  color: var(--color-fg);
+}
+
+.body-sm {
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-relaxed);
+  color: var(--color-fg-secondary);
+}
+
+.label {
+  font-family: var(--font-primary);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-fg-secondary);
+}
+
+.display {
+  font-family: var(--font-primary);
+  font-size: var(--text-6xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+blockquote, .quote {
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-relaxed);
+  font-style: italic;
+  color: var(--color-fg-secondary);
+}
+
+/* ─── Component Tokens ───────────────────────────────────── */
+:root {
+  /* Border radius */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   20px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32: 128px;
+
+  /* Shadows */
+  --shadow-sm:   0 1px 3px rgba(48, 47, 56, 0.08);
+  --shadow-md:   0 4px 16px rgba(48, 47, 56, 0.10);
+  --shadow-lg:   0 8px 32px rgba(48, 47, 56, 0.12);
+  --shadow-card: 0 2px 12px rgba(180, 142, 249, 0.12);
+
+  /* Transitions */
+  --transition-fast:   150ms ease;
+  --transition-base:   250ms ease;
+  --transition-slow:   400ms ease;
+}
