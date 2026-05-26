@@ -1,4 +1,4 @@
-// polish.jsx — Motion + atmosphere primitives shared across every page.
+// polish.jsx, Motion + atmosphere primitives shared across every page.
 // Scroll reveals, parallax, animated numerals, marquees, magnetic hovers,
 // background orbs, grain, custom cursor, scroll progress bar.
 
@@ -114,7 +114,7 @@ const Parallax = ({ children, speed = 0.15, style, ...rest }) => {
   );
 };
 
-// ── AnimatedNumber — counts up from 0 when in view ────────────
+// ── AnimatedNumber, counts up from 0 when in view ────────────
 const AnimatedNumber = ({ to = 100, duration = 1600, prefix = '', suffix = '', format = (n) => Math.round(n).toLocaleString('de-DE'), style }) => {
   const [ref, seen] = useInView();
   const [val, setVal] = React.useState(0);
@@ -160,7 +160,7 @@ const Marquee = ({ children, speed = 50, reverse = false, gap = 56, style }) => 
   );
 };
 
-// ── MagneticBtn — wraps a button so it leans toward cursor ────
+// ── MagneticBtn, wraps a button so it leans toward cursor ────
 const Magnetic = ({ children, strength = 0.25, radius = 80, style, ...rest }) => {
   const ref = React.useRef(null);
   const [t, setT] = React.useState({ x: 0, y: 0 });
@@ -188,7 +188,7 @@ const Magnetic = ({ children, strength = 0.25, radius = 80, style, ...rest }) =>
   );
 };
 
-// ── WordReveal — split children string into words; staggered ──
+// ── WordReveal, split children string into words; staggered ──
 const WordReveal = ({ text, delay = 0, step = 60, lineHeight = 1.05, style, wordStyle, accentWords = [], accentStyle = {} }) => {
   const [ref, seen] = useInView();
   const words = text.split(' ');
@@ -212,7 +212,7 @@ const WordReveal = ({ text, delay = 0, step = 60, lineHeight = 1.05, style, word
   );
 };
 
-// ── BackgroundOrbs — slow drifting blurred radial blobs ───────
+// ── BackgroundOrbs, slow drifting blurred radial blobs ───────
 const BackgroundOrbs = ({ variant = 'dark', count = 3 }) => {
   const palettes = {
     dark:  ['#b48ef9', '#edff66', '#8a5ef5'],
@@ -244,7 +244,7 @@ const BackgroundOrbs = ({ variant = 'dark', count = 3 }) => {
   );
 };
 
-// ── GrainOverlay — fine film grain on top of everything ───────
+// ── GrainOverlay, fine film grain on top of everything ───────
 const GrainOverlay = ({ opacity = 0.04, fixed = true }) => (
   <div aria-hidden style={{
     position: fixed ? 'fixed' : 'absolute', inset: 0,
@@ -254,7 +254,7 @@ const GrainOverlay = ({ opacity = 0.04, fixed = true }) => (
   }} />
 );
 
-// ── HoverImage — image with subtle zoom + dim overlay on hover ─
+// ── HoverImage, image with subtle zoom + dim overlay on hover ─
 const HoverImage = ({ src, alt, height = 460, radius = 20, caption, style }) => {
   const [hover, setHover] = React.useState(false);
   return (
@@ -282,7 +282,7 @@ const HoverImage = ({ src, alt, height = 460, radius = 20, caption, style }) => 
   );
 };
 
-// ── ScrollProgress — thin top bar that fills with page scroll ──
+// ── ScrollProgress, thin top bar that fills with page scroll ──
 const ScrollProgress = ({ color = 'var(--color-lavender-oil)' }) => {
   const [p, setP] = React.useState(0);
   React.useEffect(() => {
@@ -314,7 +314,7 @@ const ScrollProgress = ({ color = 'var(--color-lavender-oil)' }) => {
   );
 };
 
-// ── CursorBlob — subtle blob trails the mouse on dark sections ─
+// ── CursorBlob, subtle blob trails the mouse on dark sections ─
 const CursorBlob = () => {
   const ref = React.useRef(null);
   React.useEffect(() => {
@@ -345,7 +345,7 @@ const CursorBlob = () => {
   );
 };
 
-// ── DividerLabel — eyebrow set on a thin gradient rule ────────
+// ── DividerLabel, eyebrow set on a thin gradient rule ────────
 const DividerLabel = ({ children, color = 'var(--color-fg-secondary)', align = 'center', style }) => (
   <div style={{
     display: 'flex', alignItems: 'center', gap: 16, ...style,
@@ -359,7 +359,7 @@ const DividerLabel = ({ children, color = 'var(--color-fg-secondary)', align = '
   </div>
 );
 
-// ── Ticker — vertical ascending/descending rotating words ─────
+// ── Ticker, vertical ascending/descending rotating words ─────
 const Ticker = ({ words, intervalMs = 2400, style }) => {
   const [i, setI] = React.useState(0);
   React.useEffect(() => {
@@ -381,7 +381,7 @@ const Ticker = ({ words, intervalMs = 2400, style }) => {
   );
 };
 
-// ── KineticHeadline — oversized headline that scales on hover ─
+// ── KineticHeadline, oversized headline that scales on hover ─
 const KineticHeadline = ({ children, italic, style }) => (
   <span style={{
     fontStyle: italic ? 'italic' : 'normal',
@@ -394,7 +394,7 @@ const KineticHeadline = ({ children, italic, style }) => (
   }}>{children}</span>
 );
 
-// ── OutlineText — text rendered as transparent with stroke ────
+// ── OutlineText, text rendered as transparent with stroke ────
 const OutlineText = ({ children, stroke = 'rgba(48,47,56,0.30)', italic = true, style }) => (
   <span style={{
     color: 'transparent',
@@ -405,7 +405,7 @@ const OutlineText = ({ children, stroke = 'rgba(48,47,56,0.30)', italic = true, 
   }}>{children}</span>
 );
 
-// ── Tilt — light 3D tilt on hover (used for cards/certificates) ─
+// ── Tilt, light 3D tilt on hover (used for cards/certificates) ─
 const Tilt = ({ children, max = 6, style, ...rest }) => {
   const ref = React.useRef(null);
   const [t, setT] = React.useState({ rx: 0, ry: 0 });

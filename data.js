@@ -11,9 +11,9 @@ VJ.user = {
 };
 
 VJ.audiences = [
-  { key: 'coaches',   name: 'Coaches',                       value: 'Schärfe Methodik und Haltung — über die Standardausbildung hinaus.' },
+  { key: 'coaches',   name: 'Coaches',                       value: 'Schärfe Methodik und Haltung, über die Standardausbildung hinaus.' },
   { key: 'hr',        name: 'HR-Professionals',              value: 'Begleite Menschen in Veränderung mit psychologischer Tiefe.' },
-  { key: 'fuehrung',  name: 'Führungskräfte',                value: 'Führe mit klarem Kopf und ruhiger Hand — wissenschaftlich gestützt.' },
+  { key: 'fuehrung',  name: 'Führungskräfte',                value: 'Führe mit klarem Kopf und ruhiger Hand, wissenschaftlich gestützt.' },
   { key: 'psych',     name: 'Psycholog:innen & Therapeut:innen', value: 'Erweitere dein Repertoire um lösungs- und ressourcenorientierte Methoden.' },
   { key: 'consult',   name: 'Beratende',                     value: 'Setze Coaching-Werkzeuge gezielt in Strategie- und Beratungsmandaten ein.' },
 ];
@@ -119,9 +119,9 @@ VJ.testimonials = [
 ];
 
 VJ.faqs = [
-  { q: 'Ist das eine staatlich anerkannte Ausbildung?', a: 'Nein. VanJunge vergibt ein privates Weiterbildungszertifikat samt Open Badge. Es ist bewusst keine staatlich anerkannte Ausbildung und kein Abschluss im juristischen Sinne. Wir nennen es deshalb Weiterbildung — nicht Ausbildung.' },
+  { q: 'Ist das eine staatlich anerkannte Ausbildung?', a: 'Nein. VanJunge vergibt ein privates Weiterbildungszertifikat samt Open Badge. Es ist bewusst keine staatlich anerkannte Ausbildung und kein Abschluss im juristischen Sinne. Wir nennen es deshalb Weiterbildung, nicht Ausbildung.' },
   { q: 'Wie viele Teilnehmende pro Kohorte?', a: 'Maximal 18 Personen. Klein genug für persönliche Begleitung, groß genug für vielfältige Perspektiven in der Fallarbeit.' },
-  { q: 'Sind Aufzeichnungen verfügbar?', a: 'Ja, alle Live-Webinare werden aufgezeichnet und stehen im internen Bereich zur Verfügung. Der primäre Modus bleibt aber live — die Diskussion und Fallarbeit findet synchron statt.' },
+  { q: 'Sind Aufzeichnungen verfügbar?', a: 'Ja, alle Live-Webinare werden aufgezeichnet und stehen im internen Bereich zur Verfügung. Der primäre Modus bleibt aber live, die Diskussion und Fallarbeit findet synchron statt.' },
   { q: 'Was passiert, wenn ich einen Termin verpasse?', a: 'Du sichtest die Aufzeichnung und arbeitest die Vorbereitung selbstständig nach. Bei längerer Abwesenheit sprich uns direkt an.' },
   { q: 'Kann ich auf Rechnung zahlen?', a: 'Ja. Wähle im Checkout „Rechnung". Du erhältst eine Rechnung mit 14 Tagen Zahlungsziel. Der Zugang wird nach Zahlungseingang freigeschaltet.' },
   { q: 'Wird Umsatzsteuer ausgewiesen?', a: 'Alle Preise sind netto. Auf der Rechnung wird die gesetzliche Mehrwertsteuer (19 %) separat ausgewiesen.' },

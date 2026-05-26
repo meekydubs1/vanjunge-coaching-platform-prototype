@@ -1,4 +1,4 @@
-// auth-checkout.jsx — Register, Login, Checkout
+// auth-checkout.jsx, Register, Login, Checkout
 
 // ─── Auth shared shell ───────────────────────────────────────
 const AuthShell = ({ children, side }) => (
@@ -137,7 +137,7 @@ const LoginPage = ({ go, setAuthed }) => {
           background: 'var(--color-lavender-xlight)', borderRadius: 10,
           fontSize: 12, color: 'var(--color-near-black)', lineHeight: 1.55,
         }}>
-          <strong>Prototyp-Hinweis:</strong> Klicke einfach „Anmelden" — du landest direkt im Lernbereich.
+          <strong>Prototyp-Hinweis:</strong> Klicke einfach „Anmelden", du landest direkt im Lernbereich.
         </div>
       </form>
     </AuthShell>
@@ -249,7 +249,7 @@ const CheckoutPage = ({ go, setAuthed }) => {
               </div>
 
               <div style={{ marginTop: 22, padding: 14, background: 'var(--color-lavender-xlight)', borderRadius: 10, fontSize: 12, color: 'var(--color-near-black)', lineHeight: 1.55 }}>
-                Einmalige Zahlung. Keine wiederkehrende Abbuchung. Auf Wunsch Ratenzahlung in 3 × oder 6 × — schreib uns vor dem Kauf an.
+                Einmalige Zahlung. Keine wiederkehrende Abbuchung. Auf Wunsch Ratenzahlung in 3 × oder 6 ×, schreib uns vor dem Kauf an.
               </div>
 
               <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', gap: 8, fontSize: 12, color: 'var(--color-fg-secondary)' }}>
@@ -306,7 +306,7 @@ const CheckoutPage = ({ go, setAuthed }) => {
                     <div style={{ padding: '12px 14px', background: 'var(--color-bg-card)', borderRadius: 8, fontSize: 14, color: 'var(--color-fg-secondary)', fontFamily: 'monospace' }}>CVC</div>
                   </div>
                   <div style={{ fontSize: 11, color: 'var(--color-fg-secondary)', marginTop: 10, lineHeight: 1.5, display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <Icon name="lock" size={12} /> Wird im Produktiv-Build durch Stripe Elements ersetzt — Daten gehen niemals durch den VanJunge-Server.
+                    <Icon name="lock" size={12} /> Wird im Produktiv-Build durch Stripe Elements ersetzt, Daten gehen niemals durch den VanJunge-Server.
                   </div>
                 </div>
               </div>
@@ -358,7 +358,7 @@ const CheckoutPage = ({ go, setAuthed }) => {
             <Magnetic strength={0.14}>
               <Btn variant="primary" size="lg" full className="vj-cta-primary" onClick={onPay}>
                 <Icon name="lock" size={14} color="var(--color-near-black)" />
-                Zahlungspflichtig buchen — {VJ.priceFmt(price.brutto)}
+                Zahlungspflichtig buchen, {VJ.priceFmt(price.brutto)}
               </Btn>
             </Magnetic>
 

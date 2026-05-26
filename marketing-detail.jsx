@@ -1,4 +1,4 @@
-// marketing-detail.jsx — Path detail, Format detail, About, Instructors, Contact, FAQ
+// marketing-detail.jsx, Path detail, Format detail, About, Instructors, Contact, FAQ
 // Editorial layouts with scroll reveals, parallax certificate, refined typography.
 
 // ─── Path detail (canonical: Professional) ──────────────────
@@ -117,13 +117,13 @@ const PathDetailPage = ({ go, pathId }) => {
             <Reveal>
               <Eyebrow style={{ marginBottom: 16 }}>Für wen?</Eyebrow>
               <h2 style={{ fontSize: 36, fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.1, margin: 0 }}>
-                Wenn du andere fundiert begleiten willst —<br />
+                Wenn du andere fundiert begleiten willst,<br />
                 <span style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--color-dark)' }}>nicht „Mindset-Coachen".</span>
               </h2>
             </Reveal>
             <Reveal delay={160}>
               <p className="vj-dropcap" style={{ fontSize: 16, color: 'var(--color-dark)', lineHeight: 1.75, margin: '0 0 22px' }}>
-                Du bist erfahren genug, um zu spüren: ein gutes Tool reicht nicht. Du willst psychologische Tiefe — verstehen, was in einer Begegnung passiert, wann eine Methode greift, wann sie schadet, und wo deine eigene Grenze ist.
+                Du bist erfahren genug, um zu spüren: ein gutes Tool reicht nicht. Du willst psychologische Tiefe, verstehen, was in einer Begegnung passiert, wann eine Methode greift, wann sie schadet, und wo deine eigene Grenze ist.
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 28 }}>
                 {VJ.audiences.filter(a => path.audience.includes(a.key)).map(a => (
@@ -149,7 +149,7 @@ const PathDetailPage = ({ go, pathId }) => {
                   {path.webinars} Webinare<br />+ {path.workshops} Workshop.
                 </h2>
                 <p style={{ fontSize: 14.5, color: 'var(--color-fg-secondary)', lineHeight: 1.7, marginTop: 18 }}>
-                  Jedes Modul wird live gehalten. Aufzeichnungen ergänzen — sie ersetzen nicht das gemeinsame Arbeiten.
+                  Jedes Modul wird live gehalten. Aufzeichnungen ergänzen, sie ersetzen nicht das gemeinsame Arbeiten.
                 </p>
               </Reveal>
             </div>
@@ -310,7 +310,7 @@ const FormatDetailPage = ({ go, formatId }) => {
   ];
   const materials = [
     'Methodenkarte „Klärung / Konfrontation / Ressource"',
-    'Vorbereitungs-Reading (12 S., PDF) — eine Woche vor Termin',
+    'Vorbereitungs-Reading (12 S., PDF), eine Woche vor Termin',
     'Aufzeichnung im Lernbereich · 14 Tage verfügbar',
     'Teilnahmebescheinigung + Open Badge',
   ];
@@ -338,7 +338,7 @@ const FormatDetailPage = ({ go, formatId }) => {
               </Reveal>
               <Reveal delay={160}>
                 <p style={{ fontSize: 18, color: 'var(--color-fg-secondary)', lineHeight: 1.6, marginTop: 24, maxWidth: 640 }}>
-                  Drei Stunden live in einer kleinen Gruppe. Wir trainieren die schwierigen Momente — wenn ein Gespräch kippt, wenn eine Frage zu früh kommt, wenn Schweigen zur Methode werden muss.
+                  Drei Stunden live in einer kleinen Gruppe. Wir trainieren die schwierigen Momente, wenn ein Gespräch kippt, wenn eine Frage zu früh kommt, wenn Schweigen zur Methode werden muss.
                 </p>
               </Reveal>
               <Reveal delay={280}>
@@ -443,10 +443,10 @@ const AboutPage = ({ go }) => (
         <Reveal delay={200}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, marginTop: 56 }}>
             <p className="vj-dropcap" style={{ fontSize: 17, color: 'var(--color-dark)', lineHeight: 1.7, margin: 0 }}>
-              VanJunge ist kein Kursmarktplatz und kein Skillshare. Wir sind eine kuratierte Weiterbildung — entwickelt für Menschen, die andere Menschen begleiten und die psychologische Tiefe ohne Esoterik suchen. Miriam Junge wählt jedes Modul, jede:n Referent:in, jeden Termin selbst aus.
+              VanJunge ist kein Kursmarktplatz und kein Skillshare. Wir sind eine kuratierte Weiterbildung, entwickelt für Menschen, die andere Menschen begleiten und die psychologische Tiefe ohne Esoterik suchen. Miriam Junge wählt jedes Modul, jede:n Referent:in, jeden Termin selbst aus.
             </p>
             <p style={{ fontSize: 16, color: 'var(--color-fg-secondary)', lineHeight: 1.75, margin: 0 }}>
-              Wir nennen unsere Programme bewusst <em>Weiterbildung</em> — nicht <em>Ausbildung</em>. Wir geben ein privates Weiterbildungszertifikat aus, keinen staatlich anerkannten Abschluss. Das ist eine bewusste Entscheidung: <span className="vj-mark">Wer sich auf einen Titel verlässt, übersieht die Substanz.</span>
+              Wir nennen unsere Programme bewusst <em>Weiterbildung</em>, nicht <em>Ausbildung</em>. Wir geben ein privates Weiterbildungszertifikat aus, keinen staatlich anerkannten Abschluss. Das ist eine bewusste Entscheidung: <span className="vj-mark">Wer sich auf einen Titel verlässt, übersieht die Substanz.</span>
             </p>
           </div>
         </Reveal>
@@ -459,9 +459,9 @@ const AboutPage = ({ go }) => (
         </Reveal>
         <Stagger step={140} y={32} style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
           {[
-            ['Psychologisch fundiert', 'Jede Methode hat einen Mechanismus. Wir benennen ihn — und seine Grenzen.'],
+            ['Psychologisch fundiert', 'Jede Methode hat einen Mechanismus. Wir benennen ihn, und seine Grenzen.'],
             ['Wissenschaftlich verantwortet', 'Studien, Kontrollfragen, Replikationen. Keine Buzzwords ohne Evidenz.'],
-            ['Professionell entwickelt', 'Kuratiert wie ein Verlagsprogramm — kein Algorithmus, kein Funnel.'],
+            ['Professionell entwickelt', 'Kuratiert wie ein Verlagsprogramm, kein Algorithmus, kein Funnel.'],
           ].map(([t, d], i) => (
             <div key={t} className="vj-card" style={{ background: 'var(--color-bg-card)', borderRadius: 18, padding: 32, border: '1px solid var(--color-border)' }}>
               <span className="vj-pin" style={{ marginBottom: 20 }}>0{i+1}</span>
@@ -532,7 +532,7 @@ const ContactPage = () => {
           </Reveal>
           <Reveal delay={160}>
             <p style={{ fontSize: 16, color: 'var(--color-fg-secondary)', lineHeight: 1.65, marginTop: 22 }}>
-              Schreib uns direkt an <a href="mailto:miriam@vanjunge.de" className="vj-link" style={{ color: 'var(--color-lavender-oil)', fontWeight: 700, textDecoration: 'none' }}>miriam@vanjunge.de</a> oder nutze das Formular. Antwort kommt von Miriam selbst — innerhalb von zwei Werktagen.
+              Schreib uns direkt an <a href="mailto:miriam@vanjunge.de" className="vj-link" style={{ color: 'var(--color-lavender-oil)', fontWeight: 700, textDecoration: 'none' }}>miriam@vanjunge.de</a> oder nutze das Formular. Antwort kommt von Miriam selbst, innerhalb von zwei Werktagen.
             </p>
           </Reveal>
           {sent ? (

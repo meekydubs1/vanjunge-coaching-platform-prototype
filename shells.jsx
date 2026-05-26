@@ -1,6 +1,6 @@
-// shells.jsx — Public, Learner, and Admin chrome (nav + footer)
+// shells.jsx, Public, Learner, and Admin chrome (nav + footer)
 
-// ─── Public top nav — scroll-aware, animated hover ──────────
+// ─── Public top nav, scroll-aware, animated hover ──────────
 const PublicNav = ({ go, route, authed }) => {
   const [scrolled, setScrolled] = React.useState(false);
   React.useEffect(() => {
@@ -84,7 +84,7 @@ const PublicFooter = ({ go }) => (
         <div>
           <Logo dark size={22} />
           <p style={{ fontSize: 14, fontWeight: 500, color: '#a09eac', lineHeight: 1.7, marginTop: 22, maxWidth: 320 }}>
-            Kuratierte Weiterbildung für alle, die andere Menschen begleiten — psychologisch fundiert, wissenschaftlich verantwortet, professionell entwickelt.
+            Kuratierte Weiterbildung für alle, die andere Menschen begleiten, psychologisch fundiert, wissenschaftlich verantwortet, professionell entwickelt.
           </p>
           <div style={{ display: 'flex', gap: 20, marginTop: 28 }}>
             {['LinkedIn', 'Instagram', 'Newsletter'].map(l => (
@@ -130,7 +130,7 @@ const PublicFooter = ({ go }) => (
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12,
       }}>
         <span style={{ fontSize: 12, color: 'var(--color-fg-secondary)' }}>© 2026 VanJunge Akademie · Miriam Junge</span>
-        <span style={{ fontSize: 12, color: 'var(--color-fg-secondary)' }}>Preise netto zzgl. ges. MwSt. — Rechnung an Geschäfts- und Privatkund:innen.</span>
+        <span style={{ fontSize: 12, color: 'var(--color-fg-secondary)' }}>Preise netto zzgl. ges. MwSt., Rechnung an Geschäfts- und Privatkund:innen.</span>
       </div>
     </Container>
   </footer>

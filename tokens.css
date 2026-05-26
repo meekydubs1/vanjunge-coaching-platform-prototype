@@ -1,5 +1,5 @@
 /*
- * VanJunge Design System — Colors & Typography
+ * VanJunge Design System, Colors & Typography
  * Generated from: 240112_Van_Junge_DesigGuide.pdf + https://www.vanjunge.com
  * Design by Barbora Demovič, January 2024
  */
@@ -23,7 +23,7 @@
 
 /* ─── Base Color Tokens ──────────────────────────────────── */
 :root {
-  /* Brand palette — named as in the design guide */
+  /* Brand palette, named as in the design guide */
 
   /* "Lavender Oil" accent */
   --color-lavender-oil:        #b48ef9;   /* primary accent, buttons, highlights */
@@ -35,7 +35,7 @@
   --color-lemon-light:         #edff66;   /* primary accent (dark-bg), buttons, highlights */
   --color-lemon-pale:          #f4ff9e;   /* light lemon, surfaces */
 
-  /* Dark / neutrals — purple-tinged */
+  /* Dark / neutrals, purple-tinged */
   --color-dark:                #302f38;   /* body text on light, headlines on light */
   --color-mid:                 #656785;   /* secondary text, links, hover states */
   --color-near-black:          #1e1e23;   /* darkest text, primary text on light */
@@ -58,7 +58,7 @@
   --color-border-dark:         rgba(101, 103, 133, 0.3);
 
   /* ─── Gradient ──────────────────────────────────────── */
-  /* "Dusk Dawn" — the signature brand gradient */
+  /* "Dusk Dawn", the signature brand gradient */
   --gradient-dusk-dawn: linear-gradient(
     160deg,
     var(--color-lavender-light) 0%,

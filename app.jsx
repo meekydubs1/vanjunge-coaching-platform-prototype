@@ -1,4 +1,4 @@
-// app.jsx — Router, screen overview palette, App entry
+// app.jsx, Router, screen overview palette, App entry
 
 const PUBLIC_ROUTES = new Set([
   'home', 'catalogue', 'path-essential', 'path-professional', 'path-expert',
@@ -72,7 +72,7 @@ const App = () => {
     if (route === 'admin-courses')    return <AdminCoursesPage go={go} />;
     if (route === 'admin-course-edit')return <AdminCourseEditPage go={go} />;
     if (route === 'admin-module-edit')return <AdminModuleEditPage go={go} />;
-    // Stubbed admin secondary pages — gentle placeholders so nav links work
+    // Stubbed admin secondary pages, gentle placeholders so nav links work
     if (ADMIN_ROUTES.has(route))      return <AdminStub go={go} route={route} />;
 
     return <HomePage go={go} />;
@@ -83,7 +83,7 @@ const App = () => {
       return <AdminShell go={go} route={route}>{renderScreen()}</AdminShell>;
     }
     if (LEARNER_ROUTES.has(route)) {
-      // Learner shell — also handles 'catalogue' from inside? No, catalogue is public.
+      // Learner shell, also handles 'catalogue' from inside? No, catalogue is public.
       return <LearnerShell go={go} route={route}>{renderScreen()}</LearnerShell>;
     }
     if (AUTH_ROUTES.has(route)) {
@@ -132,7 +132,7 @@ const AdminStub = ({ go, route }) => {
           <Icon name="settings" size={28} color="var(--color-fg-secondary)" />
           <div style={{ fontSize: 18, fontWeight: 800, marginTop: 14 }}>{t}</div>
           <div style={{ fontSize: 13, color: 'var(--color-fg-secondary)', marginTop: 6, maxWidth: 360, marginLeft: 'auto', marginRight: 'auto' }}>
-            Diese Sektion zeigt im Prototyp den Sidebar-Eintrag — die Detail-Ansicht ist nicht Teil dieses Bausatzes.
+            Diese Sektion zeigt im Prototyp den Sidebar-Eintrag, die Detail-Ansicht ist nicht Teil dieses Bausatzes.
           </div>
           <div style={{ marginTop: 18 }}>
             <Btn variant="secondary" size="sm" onClick={() => go('admin')}>Zurück zum Dashboard</Btn>
@@ -143,7 +143,7 @@ const AdminStub = ({ go, route }) => {
   );
 };
 
-// ─── Screen jumper — prototype-only ──────────────────────────
+// ─── Screen jumper, prototype-only ──────────────────────────
 // Shows the 16-screen map so a reviewer can hop around without
 // following the click flow each time.
 const ScreenJumper = ({ route, go, authed, setAuthed }) => {
@@ -161,7 +161,7 @@ const ScreenJumper = ({ route, go, authed, setAuthed }) => {
   }, []);
 
   const groups = [
-    { title: 'Marketing — öffentlich', items: [
+    { title: 'Marketing, öffentlich', items: [
       ['home',                 '01 Homepage'],
       ['catalogue',            '02 Weiterbildungen / Katalog'],
       ['path-professional',    '03 Pfad-Detail (Professional)'],
@@ -218,9 +218,9 @@ const ScreenJumper = ({ route, go, authed, setAuthed }) => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
               <div>
                 <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--color-lavender-oil)', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 4 }}>Prototyp · 16 Bildschirme</div>
-                <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em' }}>VanJunge Akademie — Screen-Map</div>
+                <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em' }}>VanJunge Akademie, Screen-Map</div>
                 <div style={{ fontSize: 12.5, color: 'var(--color-fg-secondary)', marginTop: 6 }}>
-                  Folge dem Klickpfad ab Homepage — oder springe direkt zu einem Bildschirm.
+                  Folge dem Klickpfad ab Homepage, oder springe direkt zu einem Bildschirm.
                 </div>
               </div>
               <button onClick={() => setOpen(false)} style={{

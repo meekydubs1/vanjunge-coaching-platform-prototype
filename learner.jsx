@@ -1,4 +1,4 @@
-// learner.jsx — Dashboard, Path overview, Live module, Recording module, Account
+// learner.jsx, Dashboard, Path overview, Live module, Recording module, Account
 
 // ─── Dashboard ───────────────────────────────────────────────
 const DashboardPage = ({ go }) => {
@@ -164,7 +164,7 @@ const DashboardPage = ({ go }) => {
                 <Tag tone="neutral">Optional</Tag>
               </div>
               <div style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--color-dark)', lineHeight: 1.55, marginBottom: 14 }}>
-                Termin mit Miriam buchen — 60 Min., individuell.
+                Termin mit Miriam buchen, 60 Min., individuell.
               </div>
               <Btn variant="secondary" size="sm" full onClick={() => alert('Öffnet Calendly')}>
                 <Icon name="calendar" size={13} /> Calendly öffnen
@@ -239,7 +239,7 @@ const PathOverviewPage = ({ go }) => {
               {path.name.split(' ').map((w, i) => i === 1 ? <span key={i} style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--color-dark)' }}>{w}</span> : <span key={i}>{w}{i === 0 ? ' ' : ''}</span>)}
             </h1>
             <p style={{ fontSize: 16, color: 'var(--color-fg-secondary)', lineHeight: 1.7, margin: 0, maxWidth: 600 }}>
-              Du bist in der vierten Woche. Jedes Modul ist eine 90-minütige Live-Session — zusätzlich gibt es einen Praxis-Workshop und begleitende Lesematerialien.
+              Du bist in der vierten Woche. Jedes Modul ist eine 90-minütige Live-Session, zusätzlich gibt es einen Praxis-Workshop und begleitende Lesematerialien.
             </p>
             <div style={{ marginTop: 32 }}>
               <Progress value={done} total={9} label={`${done} von 9 Modulen abgeschlossen`} />
@@ -337,7 +337,7 @@ const PathOverviewPage = ({ go }) => {
   );
 };
 
-// ─── Module — Live (upcoming session) ────────────────────────
+// ─── Module, Live (upcoming session) ────────────────────────
 const LiveModulePage = ({ go }) => {
   const m = VJ.professionalModules[3]; // current
   const [remind, setRemind] = React.useState(true);
@@ -408,7 +408,7 @@ const LiveModulePage = ({ go }) => {
                 </div>
                 <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                   <Magnetic strength={0.18}>
-                    <Btn variant="primaryDark" size="lg" className="vj-cta-primary" onClick={() => alert('Öffnet Zoom — im Produktiv-Build mit One-Click-Join.')}>
+                    <Btn variant="primaryDark" size="lg" className="vj-cta-primary" onClick={() => alert('Öffnet Zoom, im Produktiv-Build mit One-Click-Join.')}>
                       <Icon name="video" size={16} /> Zur Session beitreten
                     </Btn>
                   </Magnetic>
@@ -431,7 +431,7 @@ const LiveModulePage = ({ go }) => {
                 {[
                   ['Reading: „Widerstand als Information lesen"', 'PDF · 12 S. · ~35 Min.', 'file'],
                   ['Methodenkarte als Druckvorlage', 'PDF · 2 S.', 'file'],
-                  ['Vorbereitende Frage — kurz schriftlich beantworten', '3 Min.', 'edit'],
+                  ['Vorbereitende Frage, kurz schriftlich beantworten', '3 Min.', 'edit'],
                 ].map(([t, meta, icon], i, arr) => (
                   <div key={t} style={{
                     display: 'flex', alignItems: 'center', gap: 16,
@@ -490,7 +490,7 @@ const LiveModulePage = ({ go }) => {
             <Card padding={22}>
               <Eyebrow style={{ marginBottom: 12 }}>Hinweise der Referentin</Eyebrow>
               <p style={{ fontSize: 13, color: 'var(--color-dark)', lineHeight: 1.7, margin: 0, fontStyle: 'italic' }}>
-                „Bringt einen Fall mit, den ihr in der letzten Woche erlebt habt — auch wenn er klein wirkt. Wir werden gemeinsam schauen, an welcher Stelle ein Widerstand euch eine wertvolle Information gegeben hat."
+                „Bringt einen Fall mit, den ihr in der letzten Woche erlebt habt, auch wenn er klein wirkt. Wir werden gemeinsam schauen, an welcher Stelle ein Widerstand euch eine wertvolle Information gegeben hat."
               </p>
             </Card>
             <Card padding={22}>
@@ -532,7 +532,7 @@ const Toggle = ({ on, onChange }) => (
   </button>
 );
 
-// ─── Module — Recording / embedded ────────────────────────────
+// ─── Module, Recording / embedded ────────────────────────────
 const RecordingModulePage = ({ go }) => {
   const m = VJ.professionalModules[2]; // done module
   const [completed, setCompleted] = React.useState(false);
@@ -788,7 +788,7 @@ const AccountPage = ({ go, setAuthed }) => {
             {tab === 'certs' && (
               <Card padding={32}>
                 <h2 style={{ fontSize: 22, fontWeight: 800, margin: 0 }}>Erworbene Zertifikate &amp; Open Badges</h2>
-                <p style={{ fontSize: 13.5, color: 'var(--color-fg-secondary)', margin: '8px 0 24px' }}>Privates Weiterbildungszertifikat — keine staatliche Anerkennung.</p>
+                <p style={{ fontSize: 13.5, color: 'var(--color-fg-secondary)', margin: '8px 0 24px' }}>Privates Weiterbildungszertifikat, keine staatliche Anerkennung.</p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
                   <Card padding={22} style={{ background: 'var(--gradient-dusk-dawn)' }}>
                     <Tag tone="lavender">In Bearbeitung</Tag>
@@ -812,7 +812,7 @@ const AccountPage = ({ go, setAuthed }) => {
             {tab === 'news' && (
               <Card padding={32}>
                 <h2 style={{ fontSize: 22, fontWeight: 800, margin: 0 }}>Newsletter-Einstellungen</h2>
-                <p style={{ fontSize: 13.5, color: 'var(--color-fg-secondary)', margin: '8px 0 24px' }}>Du entscheidest, was wir dir schicken — drei Mal pro Jahr, höchstens.</p>
+                <p style={{ fontSize: 13.5, color: 'var(--color-fg-secondary)', margin: '8px 0 24px' }}>Du entscheidest, was wir dir schicken, drei Mal pro Jahr, höchstens.</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {[
                     ['VanJunge Briefing', 'Eine kuratierte Lese-Empfehlung von Miriam, plus Modulrückblick.', true],
@@ -839,7 +839,7 @@ const AccountPage = ({ go, setAuthed }) => {
                 <h2 style={{ fontSize: 22, fontWeight: 800, margin: 0, color: '#a14040' }}>Konto löschen</h2>
                 <p style={{ fontSize: 13.5, color: 'var(--color-fg-secondary)', margin: '8px 0 18px', lineHeight: 1.65 }}>
                   Beim Löschen deines Kontos werden alle Profil-Daten dauerhaft entfernt. Bereits erworbene Zertifikate bleiben als PDF in deiner E-Mail verfügbar.
-                  <br/>Laufende Kohorten kannst du auch ohne aktives Konto bis zum Ende besuchen — kontaktiere uns dazu vorab.
+                  <br/>Laufende Kohorten kannst du auch ohne aktives Konto bis zum Ende besuchen, kontaktiere uns dazu vorab.
                 </p>
                 <Btn variant="danger" size="md" onClick={() => { if (confirm('Konto wirklich löschen?')) { setAuthed(false); go('home'); } }}>
                   <Icon name="trash" size={14} /> Konto unwiderruflich löschen

@@ -1,4 +1,4 @@
-// shared.jsx — Small reusable atoms for the VanJunge prototype
+// shared.jsx, Small reusable atoms for the VanJunge prototype
 
 const Eyebrow = ({ children, color = 'var(--color-lavender-oil)', style }) => (
   <div style={{
@@ -87,7 +87,7 @@ const Input = (props) => <input {...props} style={{ ...inputStyle, ...(props.sty
 const Select = (props) => <select {...props} style={{ ...inputStyle, ...(props.style || {}) }}>{props.children}</select>;
 const Textarea = (props) => <textarea {...props} style={{ ...inputStyle, resize: 'vertical', ...(props.style || {}) }} />;
 
-// Brand logo — plays the role of the VanJunge wordmark
+// Brand logo, plays the role of the VanJunge wordmark
 const Logo = ({ onClick, dark, size = 18 }) => (
   <div onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default', userSelect: 'none', display: 'flex', alignItems: 'baseline', gap: 0 }}>
     <span style={{ fontSize: size, fontWeight: 900, letterSpacing: '-0.03em', color: dark ? 'var(--color-lavender-bg)' : 'var(--color-near-black)' }}>VanJunge</span>
@@ -95,7 +95,7 @@ const Logo = ({ onClick, dark, size = 18 }) => (
   </div>
 );
 
-// Minimal stroke icons — keep visual language calm
+// Minimal stroke icons, keep visual language calm
 const Icon = ({ name, size = 16, color = 'currentColor', strokeWidth = 1.6 }) => {
   const paths = {
     arrow:        <><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></>,
@@ -165,12 +165,12 @@ const SectionHead = ({ eyebrow, title, kicker, align = 'left', maxW, eyebrowColo
   </div>
 );
 
-// Container — constrains content width
+// Container, constrains content width
 const Container = ({ children, style, maxW = 1180 }) => (
   <div style={{ maxWidth: maxW, margin: '0 auto', padding: '0 32px', ...style }}>{children}</div>
 );
 
-// A subtle textured panel — used a lot in admin & dashboards
+// A subtle textured panel, used a lot in admin & dashboards
 const SoftCard = ({ children, style, hover }) => (
   <div style={{
     background: 'var(--color-bg-card)',
@@ -214,7 +214,7 @@ const Progress = ({ value, total, label, color = 'var(--color-lavender-oil)' }) 
   );
 };
 
-// Press strip — used on home + checkout trust
+// Press strip, used on home + checkout trust
 const PressStrip = ({ dark, label }) => (
   <div style={{ padding: '32px 0', borderTop: dark ? '1px solid rgba(255,255,255,0.08)' : '1px solid var(--color-border)', borderBottom: dark ? '1px solid rgba(255,255,255,0.08)' : '1px solid var(--color-border)', background: dark ? 'transparent' : 'var(--color-bg-card)' }}>
     <Container>
@@ -230,7 +230,7 @@ const PressStrip = ({ dark, label }) => (
   </div>
 );
 
-// Status dot — used in module lists
+// Status dot, used in module lists
 const StatusDot = ({ status }) => {
   const map = {
     done:     { bg: 'var(--color-lavender-xlight)', fg: 'var(--color-lavender-oil)', label: 'Abgeschlossen', icon: 'check' },

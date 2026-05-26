@@ -1,7 +1,7 @@
-// marketing.jsx — Home, Catalogue, Path detail, Format detail, About, Instructors, Contact, FAQ
+// marketing.jsx, Home, Catalogue, Path detail, Format detail, About, Instructors, Contact, FAQ
 // Polished with scroll reveals, parallax, animated stats, editorial layouts, and refined motion.
 
-// ─── Home Hero — oversized, cinematic, parallax photograph ──
+// ─── Home Hero, oversized, cinematic, parallax photograph ──
 const HomeHero = ({ go }) => {
   const [t, setT] = React.useState(0);
   React.useEffect(() => {
@@ -29,7 +29,7 @@ const HomeHero = ({ go }) => {
             </div>
           </Reveal>
 
-          {/* Hero headline — split-word reveal */}
+          {/* Hero headline, split-word reveal */}
           <h1 style={{
             fontSize: 'clamp(56px, 8vw, 116px)',
             fontWeight: 800, letterSpacing: '-0.045em', lineHeight: 0.95,
@@ -56,7 +56,7 @@ const HomeHero = ({ go }) => {
                   fontSize: 19, fontWeight: 500, color: 'var(--color-dark)',
                   lineHeight: 1.55, maxWidth: 560, margin: 0,
                 }}>
-                  Live-Weiterbildung für Menschen, die andere Menschen begleiten —
+                  Live-Weiterbildung für Menschen, die andere Menschen begleiten,
                   <span className="vj-mark"> psychologisch fundiert</span>, wissenschaftlich verantwortet, professionell entwickelt.
                 </p>
               </Reveal>
@@ -103,7 +103,7 @@ const HomeHero = ({ go }) => {
                   }}>
                     <Eyebrow color="var(--color-lemon-light)" style={{ marginBottom: 8 }}>Kuration</Eyebrow>
                     <div style={{ fontSize: 13.5, fontWeight: 600, lineHeight: 1.45 }}>
-                      Miriam Junge — Diplom-Psychologin, approbierte Psychotherapeutin, Autorin.
+                      Miriam Junge, Diplom-Psychologin, approbierte Psychotherapeutin, Autorin.
                     </div>
                   </div>
 
@@ -163,7 +163,7 @@ const HomeHero = ({ go }) => {
   );
 };
 
-// ─── Press strip — refined marquee ──────────────────────────
+// ─── Press strip, refined marquee ──────────────────────────
 const HomePressStrip = () => (
   <section style={{ background: 'var(--color-bg-card)', padding: '40px 0', borderBottom: '1px solid var(--color-border)' }}>
     <Container>
@@ -186,7 +186,7 @@ const HomePressStrip = () => (
   </section>
 );
 
-// ─── Audience — editorial 5-column with hover reveal ────────
+// ─── Audience, editorial 5-column with hover reveal ────────
 const AudienceSection = () => {
   const [hover, setHover] = React.useState(-1);
   return (
@@ -203,7 +203,7 @@ const AudienceSection = () => {
           </Reveal>
           <Reveal delay={140}>
             <p style={{ fontSize: 16.5, fontWeight: 500, color: 'var(--color-fg-secondary)', lineHeight: 1.7, margin: 0, maxWidth: 540 }}>
-              Fünf Berufsgruppen — eine geteilte Anforderung: in einer Begegnung wirksam zu sein, ohne sich selbst zu verlieren. Wir bauen die Methodik, du bringst die Praxis.
+              Fünf Berufsgruppen, eine geteilte Anforderung: in einer Begegnung wirksam zu sein, ohne sich selbst zu verlieren. Wir bauen die Methodik, du bringst die Praxis.
             </p>
           </Reveal>
         </div>
@@ -246,7 +246,7 @@ const AudienceSection = () => {
   );
 };
 
-// ─── Paths — three editorial cards with motion ──────────────
+// ─── Paths, three editorial cards with motion ──────────────
 const PathsSection = ({ go }) => (
   <section style={{ background: 'var(--color-bg)', padding: '128px 0', position: 'relative', overflow: 'hidden' }}>
     <BackgroundOrbs variant="light" count={2} />
@@ -261,7 +261,7 @@ const PathsSection = ({ go }) => (
         </Reveal>
         <Reveal delay={140}>
           <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--color-fg-secondary)', lineHeight: 1.7, margin: 0, maxWidth: 520 }}>
-            Jeder Pfad endet mit einem privaten Weiterbildungszertifikat und Open Badge. Wir sagen offen: dies ist keine staatlich anerkannte Ausbildung — sondern eine ernsthafte Vertiefung.
+            Jeder Pfad endet mit einem privaten Weiterbildungszertifikat und Open Badge. Wir sagen offen: dies ist keine staatlich anerkannte Ausbildung, sondern eine ernsthafte Vertiefung.
           </p>
         </Reveal>
       </div>
@@ -329,7 +329,7 @@ const PathsSection = ({ go }) => (
   </section>
 );
 
-// ─── Single formats teaser — editorial cards w/ hover reveal ─
+// ─── Single formats teaser, editorial cards w/ hover reveal ─
 const SingleFormatsTeaser = ({ go }) => (
   <section style={{ background: 'var(--color-bg-card)', padding: '128px 0' }}>
     <Container>
@@ -340,7 +340,7 @@ const SingleFormatsTeaser = ({ go }) => (
             Lieber <span style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--color-dark)' }}>einzeln</span> einsteigen.
           </h2>
           <p style={{ fontSize: 15.5, color: 'var(--color-fg-secondary)', lineHeight: 1.65, marginTop: 16, maxWidth: 540 }}>
-            Webinare (90 Min., 149&nbsp;€), Workshops (3 Std., 329&nbsp;€) und Halbtag-Intensive (4 Std., 499&nbsp;€) — als separater Baustein oder zur Probe.
+            Webinare (90 Min., 149&nbsp;€), Workshops (3 Std., 329&nbsp;€) und Halbtag-Intensive (4 Std., 499&nbsp;€), als separater Baustein oder zur Probe.
           </p>
         </Reveal>
         <Reveal delay={140}>
@@ -397,7 +397,7 @@ const FormatTeaserCard = ({ f, go }) => {
   );
 };
 
-// ─── Founder block — full-bleed editorial w/ parallax ───────
+// ─── Founder block, full-bleed editorial w/ parallax ───────
 const FounderBlock = ({ go }) => (
   <section style={{ background: 'var(--color-near-black)', color: 'var(--color-fg-on-dark)', padding: '128px 0', position: 'relative', overflow: 'hidden' }}>
     <BackgroundOrbs variant="dark" count={3} />
@@ -428,7 +428,7 @@ const FounderBlock = ({ go }) => (
           </Reveal>
           <Reveal delay={180}>
             <p style={{ fontSize: 16, fontWeight: 500, color: '#cdc8d8', lineHeight: 1.7, marginTop: 28, maxWidth: 560 }}>
-              Diplom-Psychologin (Berlin), approbierte Psychotherapeutin, über zwei Jahrzehnte Praxis mit Führungskräften, Teams und Privatpersonen. Regelmäßige Beiträge in Zeit, Handelsblatt und Deutschlandfunk Nova. VanJunge ist ihr persönliches Kuratorat — kein Marktplatz, kein Skillshare.
+              Diplom-Psychologin (Berlin), approbierte Psychotherapeutin, über zwei Jahrzehnte Praxis mit Führungskräften, Teams und Privatpersonen. Regelmäßige Beiträge in Zeit, Handelsblatt und Deutschlandfunk Nova. VanJunge ist ihr persönliches Kuratorat, kein Marktplatz, kein Skillshare.
             </p>
           </Reveal>
           <Reveal delay={320}>
@@ -460,7 +460,7 @@ const FounderBlock = ({ go }) => (
   </section>
 );
 
-// ─── Testimonials — editorial layout ────────────────────────
+// ─── Testimonials, editorial layout ────────────────────────
 const TestimonialsSection = () => (
   <section style={{ background: '#26252c', padding: '128px 0', color: 'var(--color-fg-on-dark)', position: 'relative', overflow: 'hidden' }}>
     <Container>
@@ -499,7 +499,7 @@ const TestimonialsSection = () => (
   </section>
 );
 
-// ─── Newsletter — full-bleed dusk-dawn ──────────────────────
+// ─── Newsletter, full-bleed dusk-dawn ──────────────────────
 const NewsletterSection = () => {
   const [email, setEmail] = React.useState('');
   const [sent, setSent] = React.useState(false);
@@ -514,7 +514,7 @@ const NewsletterSection = () => {
               Drei mal im Jahr<br /><span style={{ fontStyle: 'italic', fontWeight: 500 }}>ein Brief.</span>
             </h2>
             <p style={{ fontSize: 16.5, color: 'var(--color-dark)', lineHeight: 1.65, margin: '0 0 36px', maxWidth: 540, marginLeft: 'auto', marginRight: 'auto' }}>
-              Eine kuratierte Lese-Empfehlung von Miriam, ein Modulrückblick, ein Termin. Drei Mal pro Jahr — sonst nichts.
+              Eine kuratierte Lese-Empfehlung von Miriam, ein Modulrückblick, ein Termin. Drei Mal pro Jahr, sonst nichts.
             </p>
             {sent ? (
               <div style={{
@@ -551,7 +551,7 @@ const NewsletterSection = () => {
   );
 };
 
-// ─── Pull-quote section — bridges narrative ─────────────────
+// ─── Pull-quote section, bridges narrative ─────────────────
 const PullQuote = () => (
   <section style={{ padding: '112px 0', background: 'var(--color-bg-card)' }}>
     <Container maxW={920}>
@@ -563,7 +563,7 @@ const PullQuote = () => (
           color: 'var(--color-near-black)',
         }}>
           <span style={{ fontStyle: 'italic', color: 'var(--color-lavender-oil)' }}>„</span>
-          Wer Menschen ernsthaft begleiten will, braucht <span className="vj-mark">Methodik mit Mechanismus</span> — kein Repertoire aus Buzzwords. Was wir tun, soll erklärbar sein, replizierbar, und seine Grenzen kennen.<span style={{ fontStyle: 'italic', color: 'var(--color-lavender-oil)' }}>"</span>
+          Wer Menschen ernsthaft begleiten will, braucht <span className="vj-mark">Methodik mit Mechanismus</span>, kein Repertoire aus Buzzwords. Was wir tun, soll erklärbar sein, replizierbar, und seine Grenzen kennen.<span style={{ fontStyle: 'italic', color: 'var(--color-lavender-oil)' }}>"</span>
         </p>
         <div style={{ marginTop: 36, display: 'flex', alignItems: 'center', gap: 14 }}>
           <Avatar name="Miriam Junge" src="assets/photo-miriam.jpg" size={48} />
@@ -595,13 +595,13 @@ const HomePage = ({ go }) => (
 const ComparisonMatrix = ({ go }) => {
   const rows = [
     ['Live-Webinare',            p => p.webinars + ' × 90 Min.'],
-    ['Praxis-Workshops',         p => p.workshops > 0 ? p.workshops + ' × 3 Std.' : '—'],
-    ['Supervision',              p => p.supervision ? '3 × 60 Min.' : '—'],
+    ['Praxis-Workshops',         p => p.workshops > 0 ? p.workshops + ' × 3 Std.' : '–'],
+    ['Supervision',              p => p.supervision ? '3 × 60 Min.' : '–'],
     ['Begleitmaterialien',       p => 'Methodenkarten, Lesematerial'],
     ['Kohorten-Community',       p => p.tier !== 'Essential' ? 'Geschlossene Kohorte' : 'Sammel-Termine'],
-    ['Eigene Fallarbeit',        p => p.tier === 'Essential' ? '—' : (p.tier === 'Professional' ? 'In Kleingruppen' : 'Individuell + Plenum')],
-    ['Spezialisierung',          p => p.tier === 'Expert' ? 'Schwerpunktthema' : '—'],
-    ['Aufnahme in Expert Pool',  p => p.tier === 'Expert' ? 'Ja' : '—'],
+    ['Eigene Fallarbeit',        p => p.tier === 'Essential' ? '–' : (p.tier === 'Professional' ? 'In Kleingruppen' : 'Individuell + Plenum')],
+    ['Spezialisierung',          p => p.tier === 'Expert' ? 'Schwerpunktthema' : '–'],
+    ['Aufnahme in Expert Pool',  p => p.tier === 'Expert' ? 'Ja' : '–'],
     ['Zeitlicher Umfang',        p => '≈ ' + p.hours + ' Std.'],
     ['Preis',                    p => VJ.priceFmt(p.price) + ' netto'],
   ];
@@ -681,7 +681,7 @@ const CataloguePage = ({ go }) => {
           </Reveal>
           <Reveal delay={180}>
             <p style={{ fontSize: 17, color: 'var(--color-fg-secondary)', lineHeight: 1.65, marginTop: 28, maxWidth: 620 }}>
-              Alle Formate sind live, alle Preise netto. Wähle einen Pfad für die strukturierte Vertiefung — oder ein Einzelformat als Probe.
+              Alle Formate sind live, alle Preise netto. Wähle einen Pfad für die strukturierte Vertiefung, oder ein Einzelformat als Probe.
             </p>
           </Reveal>
         </Container>

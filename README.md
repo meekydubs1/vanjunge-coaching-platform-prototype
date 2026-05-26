@@ -1,6 +1,6 @@
-# VanJunge Coaching Platform — Visual Prototype
+# VanJunge Coaching Platform, Visual Prototype
 
-This is a **clickable visual prototype** of the VanJunge coaching platform. It is intended for design feedback only — none of the buttons, forms, or flows are wired to a backend yet.
+This is a **clickable visual prototype** of the VanJunge coaching platform. It is intended for design feedback only, none of the buttons, forms, or flows are wired to a backend yet.
 
 ## Live preview
 
@@ -18,4 +18,4 @@ A self-contained static bundle: HTML + CSS + React (loaded from a CDN) + a small
 
 ## Giving feedback
 
-The fastest channel is to take screenshots and annotate them, or to leave comments per screen with the screen number visible in the Prototyp-Map (e.g. *"01 Homepage — second section"*).
+The fastest channel is to take screenshots and annotate them, or to leave comments per screen with the screen number visible in the Prototyp-Map (e.g. *"01 Homepage, second section"*).

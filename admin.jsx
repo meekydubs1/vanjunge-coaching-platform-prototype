@@ -1,4 +1,4 @@
-// admin.jsx — Admin dashboard, courses list, course edit, module edit
+// admin.jsx, Admin dashboard, courses list, course edit, module edit
 
 // ─── Admin Dashboard ─────────────────────────────────────────
 const AdminDashboardPage = ({ go }) => (
@@ -379,7 +379,7 @@ const AdminCourseEditPage = ({ go }) => {
                     </Select>
                   </Field>
                 </div>
-                <Field label="Kurzbeschreibung" hint="max. 220 Zeichen — Katalog & Karte">
+                <Field label="Kurzbeschreibung" hint="max. 220 Zeichen, Katalog & Karte">
                   <Textarea rows={2} defaultValue="Acht Live-Webinare und ein Praxis-Workshop. Du arbeitest in einer überschaubaren Kohorte an realen Fällen." />
                 </Field>
                 <Field label="Langbeschreibung">
@@ -461,7 +461,7 @@ const AdminCourseEditPage = ({ go }) => {
                   <Select defaultValue="19">
                     <option value="19">19 % (Standard)</option>
                     <option value="7">7 %</option>
-                    <option value="0">0 % (Bildung — falls anwendbar)</option>
+                    <option value="0">0 % (Bildung, falls anwendbar)</option>
                   </Select>
                 </Field>
                 <Field label="Währung"><Select defaultValue="EUR"><option>EUR</option></Select></Field>
@@ -520,13 +520,13 @@ const AdminCourseEditPage = ({ go }) => {
                     <option value="minimal">Minimal Schwarz/Weiß</option>
                   </Select>
                 </Field>
-                <Field label="SEO-Titel"><Input defaultValue="VanJunge Professional — Live-Weiterbildung für Coaches" /></Field>
+                <Field label="SEO-Titel"><Input defaultValue="VanJunge Professional, Live-Weiterbildung für Coaches" /></Field>
                 <Field label="SEO-Meta-Description"><Textarea rows={2} defaultValue="8 Live-Webinare + Workshop. Psychologisch fundiert. Kuratiert von Miriam Junge." /></Field>
               </div>
             </SoftCard>
           </div>
 
-          {/* Right sidebar — publish */}
+          {/* Right sidebar, publish */}
           <div style={{ position: 'sticky', top: 96, display: 'flex', flexDirection: 'column', gap: 16 }}>
             <SoftCard padding={22}>
               <SectionLabel>Status</SectionLabel>
@@ -741,7 +741,7 @@ const AdminModuleEditPage = ({ go }) => {
                     border: '1px solid var(--color-border)', borderRadius: 10, cursor: 'pointer',
                   }}>
                     <input type="checkbox" defaultChecked style={{ accentColor: 'var(--color-lavender-oil)' }} />
-                    <span style={{ fontSize: 13, fontWeight: 600 }}>Modul 0{m.n} — {m.title}</span>
+                    <span style={{ fontSize: 13, fontWeight: 600 }}>Modul 0{m.n}, {m.title}</span>
                   </label>
                 ))}
               </div>
@@ -853,7 +853,7 @@ const ContentBlock = ({ block, idx, onRemove }) => {
             <Icon name="file" size={20} color="var(--color-lavender-oil)" />
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 13, fontWeight: 700 }}>{block.filename || 'Datei wählen…'}</div>
-              <div style={{ fontSize: 11, color: 'var(--color-fg-secondary)' }}>{block.size || 'PDF, MD, ZIP — bis 50 MB'}</div>
+              <div style={{ fontSize: 11, color: 'var(--color-fg-secondary)' }}>{block.size || 'PDF, MD, ZIP, bis 50 MB'}</div>
             </div>
             <Btn variant="secondary" size="sm">Hochladen</Btn>
           </div>
