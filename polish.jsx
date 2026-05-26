@@ -395,7 +395,7 @@ const KineticHeadline = ({ children, italic, style }) => (
 );
 
 // ── OutlineText, text rendered as transparent with stroke ────
-const OutlineText = ({ children, stroke = 'rgba(48,47,56,0.30)', italic = true, style }) => (
+const OutlineText = ({ children, stroke = 'rgba(48,47,56,0.55)', italic = true, style }) => (
   <span style={{
     color: 'transparent',
     WebkitTextStroke: `1px ${stroke}`,

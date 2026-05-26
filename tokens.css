@@ -21,6 +21,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('fonts/PlayfairDisplay-VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('fonts/PlayfairDisplay-Italic-VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* ─── Base Color Tokens ──────────────────────────────────── */
 :root {
   /* Brand palette, named as in the design guide */
@@ -40,8 +56,12 @@
   --color-mid:                 #656785;   /* secondary text, links, hover states */
   --color-near-black:          #1e1e23;   /* darkest text, primary text on light */
 
+  /* "Lavender Deep", darker tone for primary buttons (WCAG AA on white text) */
+  --color-lavender-deep:       #6b3dd8;   /* primary button bg, ~7:1 vs white */
+  --color-lavender-deep-hover: #5a30c4;   /* deeper hover state */
+
   /* ─── Semantic Color Tokens ─────────────────────────── */
-  --color-bg:                  #f3f0fa;   /* page background (off-white lavender) */
+  --color-bg:                  #eceaf4;   /* page background, darkened for card contrast */
   --color-bg-dark:             #1e1e23;   /* dark section background */
   --color-bg-card:             #ffffff;   /* card surfaces */
   --color-bg-accent:           var(--color-lavender-xlight);
@@ -81,6 +101,7 @@
 /* ─── Typography Tokens ──────────────────────────────────── */
 :root {
   --font-primary:   'Inter', system-ui, -apple-system, sans-serif;
+  --font-display:   'Playfair Display', Georgia, serif;
 
   /* Scale */
   --text-xs:    0.75rem;    /* 12px */
@@ -116,20 +137,21 @@
 
 /* ─── Semantic Type Styles ───────────────────────────────── */
 h1, .h1 {
-  font-family: var(--font-primary);
+  font-family: var(--font-display);
   font-size: var(--text-5xl);
   font-weight: var(--weight-extrabold);
   line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
+  /* Tighter at large sizes, looser at small — clamped */
+  letter-spacing: clamp(-0.02em, -0.024em, -0.04em);
   color: var(--color-fg);
 }
 
 h2, .h2 {
-  font-family: var(--font-primary);
+  font-family: var(--font-display);
   font-size: var(--text-4xl);
   font-weight: var(--weight-bold);
   line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: clamp(-0.015em, -0.018em, -0.025em);
   color: var(--color-fg);
 }
 
@@ -152,7 +174,7 @@ h4, .h4 {
 p, .body {
   font-family: var(--font-primary);
   font-size: var(--text-base);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-regular);
   line-height: var(--leading-relaxed);
   color: var(--color-fg);
 }
@@ -219,7 +241,8 @@ blockquote, .quote {
   --shadow-sm:   0 1px 3px rgba(48, 47, 56, 0.08);
   --shadow-md:   0 4px 16px rgba(48, 47, 56, 0.10);
   --shadow-lg:   0 8px 32px rgba(48, 47, 56, 0.12);
-  --shadow-card: 0 2px 12px rgba(180, 142, 249, 0.12);
+  --shadow-card: 0 4px 24px rgba(74, 47, 138, 0.10);
+  --shadow-card-strong: 0 12px 36px rgba(74, 47, 138, 0.14);
 
   /* Transitions */
   --transition-fast:   150ms ease;

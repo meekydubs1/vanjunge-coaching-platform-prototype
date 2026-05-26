@@ -1,6 +1,26 @@
 // learner.jsx, Dashboard, Path overview, Live module, Recording module, Account
 
 // ─── Dashboard ───────────────────────────────────────────────
+// Small inline download button with momentary check-icon confirmation
+const DownloadIconButton = ({ filename }) => {
+  const [ok, setOk] = React.useState(false);
+  const onClick = () => {
+    setOk(true);
+    setTimeout(() => setOk(false), 1500);
+  };
+  return (
+    <button onClick={onClick} aria-label={`Herunterladen: ${filename}`} title="Herunterladen" style={{
+      background: 'none', border: 'none', cursor: 'pointer',
+      color: ok ? 'var(--color-lavender-deep)' : 'var(--color-fg-secondary)',
+      padding: 6, borderRadius: 6, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+      transition: 'color 200ms ease, transform 200ms ease',
+      transform: ok ? 'scale(1.05)' : 'scale(1)',
+    }}>
+      <Icon name={ok ? 'check' : 'download'} size={16} />
+    </button>
+  );
+};
+
 const DashboardPage = ({ go }) => {
   const next = VJ.professionalModules.find(m => m.status === 'current') || VJ.professionalModules[3];
   const done = VJ.professionalModules.filter(m => m.status === 'done').length;
@@ -37,7 +57,9 @@ const DashboardPage = ({ go }) => {
           position: 'relative', overflow: 'hidden',
           boxShadow: '0 32px 80px rgba(48,47,56,0.18)',
         }}>
-          <BackgroundOrbs variant="dark" count={3} />
+          <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+            <BackgroundOrbs variant="dark" count={2} />
+          </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 56, position: 'relative', zIndex: 2 }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
@@ -201,7 +223,7 @@ const DashboardPage = ({ go }) => {
                     <div style={{ fontSize: 13.5, fontWeight: 700, lineHeight: 1.3 }}>{t}</div>
                     <div style={{ fontSize: 11.5, color: 'var(--color-fg-secondary)', marginTop: 4 }}>{meta} · {time}</div>
                   </div>
-                  <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-fg-secondary)' }}><Icon name="download" size={16} /></button>
+                  <DownloadIconButton filename={t} />
                 </div>
               </Card>
             ))}
@@ -341,17 +363,20 @@ const PathOverviewPage = ({ go }) => {
 const LiveModulePage = ({ go }) => {
   const m = VJ.professionalModules[3]; // current
   const [remind, setRemind] = React.useState(true);
-  const [timeLeft, setTimeLeft] = React.useState({ h: 2, m: 14, s: 32 });
+  // Tab-resistant countdown: anchor to a target timestamp instead of decrementing.
+  const targetRef = React.useRef(Date.now() + ((2 * 60 + 14) * 60 + 32) * 1000);
+  const computeRemaining = () => {
+    const ms = Math.max(0, targetRef.current - Date.now());
+    const total = Math.floor(ms / 1000);
+    return { h: Math.floor(total / 3600), m: Math.floor((total % 3600) / 60), s: total % 60 };
+  };
+  const [timeLeft, setTimeLeft] = React.useState(computeRemaining);
   React.useEffect(() => {
-    const t = setInterval(() => {
-      setTimeLeft(({ h, m, s }) => {
-        if (s > 0) return { h, m, s: s - 1 };
-        if (m > 0) return { h, m: m - 1, s: 59 };
-        if (h > 0) return { h: h - 1, m: 59, s: 59 };
-        return { h: 0, m: 0, s: 0 };
-      });
-    }, 1000);
-    return () => clearInterval(t);
+    const tick = () => setTimeLeft(computeRemaining());
+    const interval = setInterval(tick, 1000);
+    const onVisible = () => { if (!document.hidden) tick(); };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => { clearInterval(interval); document.removeEventListener('visibilitychange', onVisible); };
   }, []);
   return (
     <div className="route-fade">
@@ -378,29 +403,33 @@ const LiveModulePage = ({ go }) => {
               borderRadius: 22, padding: 40, position: 'relative', overflow: 'hidden',
               boxShadow: '0 32px 80px rgba(48,47,56,0.2)',
             }}>
-              <BackgroundOrbs variant="dark" count={2} />
+              <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+                <BackgroundOrbs variant="dark" count={2} />
+              </div>
               <div style={{ position: 'relative', zIndex: 2 }}>
                 <Eyebrow color="var(--color-lemon-light)" style={{ marginBottom: 16 }}>Startet in</Eyebrow>
-                <div style={{ display: 'flex', gap: 20, marginBottom: 28 }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 28 }}>
                   {[['Std.', timeLeft.h], ['Min.', timeLeft.m], ['Sek.', timeLeft.s]].map(([l, v], i) => (
-                    <div key={l} style={{ minWidth: 84, position: 'relative' }}>
-                      <div className="vj-num" style={{
-                        fontSize: 72, fontWeight: 900,
-                        color: 'var(--color-lemon-light)',
-                        letterSpacing: '-0.06em',
-                        lineHeight: 0.9,
-                        textShadow: '0 12px 32px rgba(237,255,102,0.18)',
-                      }}>
-                        {String(v).padStart(2, '0')}
+                    <React.Fragment key={l}>
+                      <div style={{ minWidth: 84 }}>
+                        <div className="vj-num" style={{
+                          fontSize: 72, fontWeight: 900,
+                          color: 'var(--color-lemon-light)',
+                          letterSpacing: '-0.06em',
+                          lineHeight: 0.9,
+                          textShadow: '0 12px 32px rgba(237,255,102,0.18)',
+                        }}>
+                          {String(v).padStart(2, '0')}
+                        </div>
+                        <div style={{ fontSize: 11.5, color: '#a09eac', marginTop: 8, letterSpacing: '.08em', textTransform: 'uppercase' }}>{l}</div>
                       </div>
-                      <div style={{ fontSize: 11.5, color: '#a09eac', marginTop: 8, letterSpacing: '.08em', textTransform: 'uppercase' }}>{l}</div>
                       {i < 2 && (
-                        <div style={{
-                          position: 'absolute', top: 14, right: -14,
-                          fontSize: 36, color: 'rgba(213,191,255,0.20)', fontWeight: 300,
+                        <div aria-hidden style={{
+                          fontSize: 56, color: 'rgba(213,191,255,0.40)',
+                          fontWeight: 300, lineHeight: 0.9, paddingTop: 12,
                         }}>:</div>
                       )}
-                    </div>
+                    </React.Fragment>
                   ))}
                 </div>
                 <div style={{ fontSize: 13.5, color: '#cdc8d8', marginBottom: 22 }}>
@@ -506,7 +535,15 @@ const LiveModulePage = ({ go }) => {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span>Stabile Verbindung</span>
-                  <span style={{ fontSize: 11, color: 'var(--color-fg-secondary)' }}>Test starten</span>
+                  <a
+                    href="https://speed.cloudflare.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="vj-link"
+                    style={{ fontSize: 11, color: 'var(--color-lavender-deep)', fontWeight: 700, textDecoration: 'none' }}
+                  >
+                    Test starten →
+                  </a>
                 </div>
               </div>
             </Card>
@@ -558,7 +595,9 @@ const RecordingModulePage = ({ go }) => {
               background: 'var(--color-near-black)', borderRadius: 22, overflow: 'hidden',
               boxShadow: '0 32px 80px rgba(48,47,56,0.22)',
             }}>
-              <BackgroundOrbs variant="dark" count={2} />
+              <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+                <BackgroundOrbs variant="dark" count={2} />
+              </div>
               <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', color: 'var(--color-lavender-bg)', zIndex: 2 }}>
                 <Magnetic strength={0.2}>
                   <button style={{
@@ -615,8 +654,19 @@ const RecordingModulePage = ({ go }) => {
                   {completed ? 'Dein Fortschritt wurde aktualisiert.' : 'Markiere dieses Modul als abgeschlossen und gehe weiter.'}
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: 10 }}>
-                {!completed && <Btn variant="secondary" size="md" onClick={() => setCompleted(true)}><Icon name="check" size={14} /> Als abgeschlossen markieren</Btn>}
+              <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                {completed ? (
+                  <Btn variant="secondary" size="md" disabled><Icon name="check" size={14} color="var(--color-lavender-deep)" /> Abgeschlossen</Btn>
+                ) : (
+                  <Btn variant="secondary" size="md" onClick={() => setCompleted(true)}><Icon name="check" size={14} /> Als abgeschlossen markieren</Btn>
+                )}
+                {completed && (
+                  <button onClick={() => setCompleted(false)} style={{
+                    background: 'transparent', border: 'none', cursor: 'pointer',
+                    color: 'var(--color-fg-secondary)', fontSize: 12.5, fontWeight: 700,
+                    textDecoration: 'underline', textUnderlineOffset: 3, padding: '6px 10px',
+                  }}>Rückgängig</button>
+                )}
                 <Btn variant="primary" size="md" onClick={() => go('module-live')}>Nächstes Modul <Icon name="arrow" size={14} /></Btn>
               </div>
             </div>
@@ -696,16 +746,35 @@ const AccountPage = ({ go, setAuthed }) => {
         </Reveal>
 
         <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: 36, alignItems: 'flex-start' }}>
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: 2, position: 'sticky', top: 88 }}>
-            {tabs.map(([k, label]) => (
-              <button key={k} onClick={() => setTab(k)} style={{
-                background: tab === k ? 'var(--color-near-black)' : 'transparent',
-                color: tab === k ? 'var(--color-lavender-bg)' : 'var(--color-dark)',
-                border: 'none', textAlign: 'left',
-                padding: '10px 14px', borderRadius: 10,
-                fontSize: 13.5, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
-              }}>{label}</button>
-            ))}
+          <nav aria-label="Account-Navigation" style={{ display: 'flex', flexDirection: 'column', gap: 2, position: 'sticky', top: 88 }}>
+            {tabs.map(([k, label], i) => {
+              const isDanger = k === 'danger';
+              const prevIsDanger = i > 0 && tabs[i - 1][0] === 'danger';
+              const showDivider = isDanger && !prevIsDanger;
+              const baseColor = tab === k
+                ? (isDanger ? '#c25151' : 'var(--color-lavender-bg)')
+                : (isDanger ? '#c25151' : 'var(--color-dark)');
+              return (
+                <React.Fragment key={k}>
+                  {showDivider && (
+                    <div aria-hidden style={{ height: 1, background: 'var(--color-border)', margin: '14px 4px 12px' }} />
+                  )}
+                  <button onClick={() => setTab(k)} aria-current={tab === k ? 'page' : undefined} style={{
+                    background: tab === k
+                      ? (isDanger ? '#fbeaea' : 'var(--color-near-black)')
+                      : 'transparent',
+                    color: baseColor,
+                    border: 'none', textAlign: 'left',
+                    padding: '10px 14px', borderRadius: 10,
+                    fontSize: 13.5, fontWeight: tab === k ? 700 : 600, cursor: 'pointer', fontFamily: 'inherit',
+                    display: 'flex', alignItems: 'center', gap: 8,
+                  }}>
+                    {isDanger && <Icon name="trash" size={14} color="#c25151" />}
+                    {label}
+                  </button>
+                </React.Fragment>
+              );
+            })}
           </nav>
 
           <div>
@@ -717,7 +786,7 @@ const AccountPage = ({ go, setAuthed }) => {
                   <Avatar name={VJ.user.name} size={72} />
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-fg-secondary)', marginBottom: 4 }}>Profilbild</div>
-                    <Btn variant="secondary" size="sm">Bild hochladen</Btn>
+                    <Btn variant="secondary" size="sm" onClick={() => alert('Bild-Upload ist im Prototyp nicht aktiv. Im Live-System öffnet sich hier der Dateiauswahl-Dialog.')}>Bild hochladen</Btn>
                     <div style={{ fontSize: 11, color: 'var(--color-fg-secondary)', marginTop: 6 }}>PNG oder JPG · max. 2 MB</div>
                   </div>
                 </div>

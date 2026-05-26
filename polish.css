@@ -132,9 +132,61 @@ body {
 
 /* ── Better focus ring (less harsh) ────────────────────────── */
 button:focus-visible, a:focus-visible, input:focus, textarea:focus, select:focus {
-  outline: 2px solid var(--color-lavender-oil);
+  outline: 2.5px solid var(--color-lavender-oil);
   outline-offset: 3px;
   border-radius: 6px;
+}
+
+/* ── Button hover lift + shadow on .vj-btn variants ────────── */
+.vj-btn:not(.vj-btn-disabled):not(.vj-btn-ghost):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(74,47,138,0.22);
+}
+.vj-btn-primary:not(.vj-btn-disabled):hover {
+  background: var(--color-lavender-deep-hover) !important;
+}
+.vj-btn-primaryDark:not(.vj-btn-disabled):hover {
+  filter: brightness(0.94);
+}
+.vj-btn-dark:not(.vj-btn-disabled):hover {
+  background: #2a2933 !important;
+}
+.vj-btn:not(.vj-btn-disabled):active { transform: translateY(0); }
+
+/* ── Skip-to-main link, visible on focus only ──────────────── */
+.vj-skip-link {
+  position: absolute;
+  left: 16px; top: 16px;
+  z-index: 2000;
+  padding: 10px 16px;
+  background: var(--color-near-black);
+  color: var(--color-lavender-bg);
+  border-radius: 8px;
+  font-size: 13px; font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 200ms ease;
+}
+.vj-skip-link:focus { transform: translateY(0); outline: 2px solid var(--color-lemon-light); }
+
+/* ── Input focus ring (subtle lavender halo) ───────────────── */
+.vj-input-glow:focus, .vj-input-glow:focus-visible {
+  outline: none;
+  border-color: var(--color-lavender-deep) !important;
+  box-shadow: 0 0 0 3px rgba(180,142,249,0.25);
+}
+
+/* ── Confetti, subtle brand-aligned dots ──────────────────── */
+@keyframes vj-confetti-fall {
+  0%   { opacity: 0; transform: translate3d(0, -8px, 0) rotate(0deg); }
+  10%  { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(var(--vj-x, 40px), 120px, 0) rotate(120deg); }
+}
+.vj-confetti-dot {
+  position: absolute;
+  width: 6px; height: 6px;
+  border-radius: 2px;
+  animation: vj-confetti-fall 1800ms cubic-bezier(.2,.8,.2,1) forwards;
 }
 
 /* ── Tabular nums for prices everywhere ────────────────────── */

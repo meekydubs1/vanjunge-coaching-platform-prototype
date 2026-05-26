@@ -15,8 +15,11 @@ const HomeHero = ({ go }) => {
   }, []);
 
   return (
-    <section style={{ position: 'relative', overflow: 'hidden', background: 'var(--gradient-dusk-dawn)' }}>
-      <BackgroundOrbs variant="light" count={3} />
+    <section style={{ position: 'relative', background: 'var(--gradient-dusk-dawn)' }}>
+      {/* Isolate orb overflow so floating hero artifacts aren't clipped */}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+        <BackgroundOrbs variant="light" count={3} />
+      </div>
       <div style={{ position: 'relative', zIndex: 2 }}>
         <Container style={{ paddingTop: 96, paddingBottom: 120 }}>
           {/* Eyebrow line */}
@@ -109,11 +112,11 @@ const HomeHero = ({ go }) => {
 
                   {/* Floating stamp */}
                   <div style={{
-                    position: 'absolute', top: -22, right: -22,
-                    width: 96, height: 96, borderRadius: '50%',
+                    position: 'absolute', top: -28, right: -28,
+                    width: 110, height: 110, borderRadius: '50%',
                     background: 'var(--color-lemon-light)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    boxShadow: '0 12px 32px rgba(30,30,35,0.18)',
+                    boxShadow: '0 0 0 4px #fff, 0 0 0 6px var(--color-near-black), 0 14px 36px rgba(30,30,35,0.22)',
                     animation: 'vj-float 5s ease-in-out -2s infinite',
                   }}>
                     <svg viewBox="0 0 100 100" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} className="vj-rotate-slow">
@@ -150,9 +153,13 @@ const HomeHero = ({ go }) => {
                   paddingRight: i === 3 ? 0 : 24,
                   borderRight: i < 3 ? '1px solid rgba(48,47,56,0.12)' : 'none',
                 }}>
-                  <span className="vj-pin" style={{ marginBottom: 14, display: 'inline-flex' }}>0{i+1}</span>
-                  <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--color-near-black)', marginTop: 12, letterSpacing: '-0.01em' }}>{t}</div>
-                  <div style={{ fontSize: 12.5, color: 'var(--color-fg-secondary)', lineHeight: 1.55, marginTop: 6, maxWidth: 220 }}>{d}</div>
+                  <div style={{
+                    fontSize: 28, fontWeight: 900, color: 'var(--color-lavender-deep)',
+                    letterSpacing: '-0.02em', fontFamily: 'var(--font-display)',
+                    lineHeight: 1, marginBottom: 12,
+                  }}>0{i+1}</div>
+                  <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-near-black)', letterSpacing: '-0.01em' }}>{t}</div>
+                  <div style={{ fontSize: 12, color: 'var(--color-fg-secondary)', lineHeight: 1.55, marginTop: 6, maxWidth: 220 }}>{d}</div>
                 </div>
               ))}
             </div>
@@ -276,7 +283,9 @@ const PathsSection = ({ go }) => (
                 color: rec ? 'var(--color-fg-on-dark)' : 'var(--color-near-black)',
                 borderRadius: 22,
                 padding: '38px 30px 30px',
-                boxShadow: rec ? '0 28px 64px rgba(48,47,56,0.22)' : '0 4px 24px rgba(180,142,249,0.12)',
+                boxShadow: rec
+                  ? '0 0 0 1px rgba(213,191,255,0.40), 0 40px 80px rgba(48,47,56,0.32)'
+                  : '0 4px 24px rgba(74,47,138,0.10)',
                 border: rec ? '1px solid rgba(213,191,255,0.18)' : '1px solid var(--color-border)',
                 display: 'flex', flexDirection: 'column',
                 transform: rec ? 'translateY(-10px)' : 'none',
@@ -374,7 +383,11 @@ const FormatTeaserCard = ({ f, go }) => {
       }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
         <Tag tone={hover ? 'dark' : 'lavender'}>{f.type} · {f.duration}</Tag>
-        <span className="vj-num" style={{ fontSize: 18, fontWeight: 900, transition: 'color 240ms ease' }}>{VJ.priceFmt(f.price)}</span>
+        <span className="vj-num" style={{
+          fontSize: 18, fontWeight: 900,
+          color: hover ? 'var(--color-lemon-light)' : 'var(--color-near-black)',
+          transition: 'color 240ms ease',
+        }}>{VJ.priceFmt(f.price)}</span>
       </div>
       <div style={{ fontSize: 18, fontWeight: 700, lineHeight: 1.25, marginBottom: 14, color: 'inherit', flex: 1 }}>{f.title}</div>
       <div style={{
@@ -529,10 +542,11 @@ const NewsletterSection = () => {
               </div>
             ) : (
               <form onSubmit={e => { e.preventDefault(); if (email) setSent(true); }} style={{ display: 'flex', gap: 10, maxWidth: 520, margin: '0 auto', flexWrap: 'wrap' }}>
-                <input type="email" placeholder="deine@adresse.de" value={email} onChange={e => setEmail(e.target.value)} required style={{
-                  flex: 1, minWidth: 240, border: 'none', background: 'var(--color-bg-card)',
+                <input type="email" placeholder="deine@adresse.de" value={email} onChange={e => setEmail(e.target.value)} required aria-label="E-Mail-Adresse" className="vj-input-glow" style={{
+                  flex: 1, minWidth: 240, border: '1.5px solid transparent', background: 'var(--color-bg-card)',
                   borderRadius: 9999, padding: '16px 24px', fontSize: 14.5, fontWeight: 500, fontFamily: 'inherit',
                   boxShadow: '0 4px 14px rgba(48,47,56,0.08)',
+                  transition: 'box-shadow 200ms ease, border-color 200ms ease',
                 }} />
                 <Magnetic strength={0.18}>
                   <Btn variant="dark" size="lg" type="submit" className="vj-cta-primary" style={{ paddingLeft: 32, paddingRight: 32 }}>
@@ -607,20 +621,25 @@ const ComparisonMatrix = ({ go }) => {
   ];
   return (
     <div style={{
-      background: 'var(--color-bg-card)', borderRadius: 22, overflow: 'hidden',
-      boxShadow: '0 12px 40px rgba(180,142,249,0.10)', border: '1px solid var(--color-border)',
+      background: 'var(--color-bg-card)', borderRadius: 22, overflow: 'visible',
+      boxShadow: '0 12px 40px rgba(74,47,138,0.10)', border: '1px solid var(--color-border)',
     }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr' }}>
-        <div style={{ padding: '32px 28px', borderBottom: '1px solid var(--color-border)' }}>
+        <div style={{
+          padding: '32px 28px', borderBottom: '1px solid var(--color-border)',
+          position: 'sticky', top: 72, zIndex: 4,
+          background: 'var(--color-bg-card)', borderTopLeftRadius: 22,
+        }}>
           <Eyebrow style={{ marginBottom: 8 }}>Vergleich</Eyebrow>
           <div style={{ fontSize: 14, color: 'var(--color-fg-secondary)', lineHeight: 1.55 }}>Wähle den Pfad, der zu deiner Tiefe passt.</div>
         </div>
-        {VJ.paths.map(p => (
+        {VJ.paths.map((p, idx) => (
           <div key={p.id} style={{
             padding: '32px 24px', borderBottom: '1px solid var(--color-border)',
             borderLeft: '1px solid var(--color-border)',
-            background: p.recommended ? 'var(--color-near-black)' : 'transparent',
-            color: p.recommended ? 'var(--color-fg-on-dark)' : 'inherit', position: 'relative',
+            background: p.recommended ? 'var(--color-near-black)' : 'var(--color-bg-card)',
+            color: p.recommended ? 'var(--color-fg-on-dark)' : 'inherit', position: 'sticky', top: 72, zIndex: 4,
+            borderTopRightRadius: idx === VJ.paths.length - 1 ? 22 : 0,
           }}>
             {p.recommended && (
               <div style={{
@@ -637,13 +656,15 @@ const ComparisonMatrix = ({ go }) => {
         ))}
         {rows.map(([label, fn], i) => (
           <React.Fragment key={i}>
-            <div style={{ padding: '18px 28px', borderBottom: i === rows.length - 1 ? 'none' : '1px solid var(--color-border)', fontSize: 13, fontWeight: 600, color: 'var(--color-dark)', display: 'flex', alignItems: 'center' }}>{label}</div>
+            <div style={{ padding: '18px 28px', borderBottom: i === rows.length - 1 ? 'none' : '1px solid var(--color-border)', fontSize: 13, fontWeight: 600, color: 'var(--color-dark)', display: 'flex', alignItems: 'center', background: i % 2 === 1 ? 'rgba(180,142,249,0.04)' : 'transparent' }}>{label}</div>
             {VJ.paths.map(p => (
               <div key={p.id} style={{
                 padding: '18px 24px', borderLeft: '1px solid var(--color-border)',
                 borderBottom: i === rows.length - 1 ? 'none' : '1px solid var(--color-border)',
                 fontSize: 13.5, fontWeight: 500,
-                background: p.recommended ? 'var(--color-near-black)' : 'transparent',
+                background: p.recommended
+                  ? (i % 2 === 1 ? '#252530' : '#1e1e23')
+                  : (i % 2 === 1 ? 'rgba(180,142,249,0.04)' : 'transparent'),
                 color: p.recommended ? 'var(--color-lavender-bg)' : 'var(--color-near-black)',
               }}>{fn(p)}</div>
             ))}
@@ -693,7 +714,7 @@ const CataloguePage = ({ go }) => {
         </Container>
       </section>
 
-      <section style={{ background: 'var(--color-bg-card)', padding: '88px 0 128px' }}>
+      <section style={{ background: 'var(--color-bg-card)', padding: filtered.length === 0 ? '48px 0' : '88px 0 128px' }}>
         <Container>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 24, marginBottom: 32 }}>
             <Reveal>
@@ -726,14 +747,34 @@ const CataloguePage = ({ go }) => {
               </div>
             </Reveal>
           </div>
-          <Stagger step={80} y={24} style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-            {filtered.map(f => <FormatTeaserCard key={f.id} f={f} go={go} />)}
-            {filtered.length === 0 && (
-              <div style={{ gridColumn: '1 / -1', padding: 64, textAlign: 'center', fontSize: 14, color: 'var(--color-fg-secondary)' }}>
-                Keine Formate in dieser Kombination. <InlineLink onClick={() => { setFmt('Alle'); setAud('Alle'); }}>Filter zurücksetzen</InlineLink>
+          {filtered.length === 0 ? (
+            <div style={{
+              padding: '64px 32px', textAlign: 'center',
+              background: 'var(--color-bg)', borderRadius: 18,
+              border: '1px dashed var(--color-border)',
+            }}>
+              <div style={{
+                width: 56, height: 56, borderRadius: '50%',
+                background: 'var(--color-lavender-xlight)',
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18,
+              }}>
+                <Icon name="search" size={22} color="var(--color-lavender-deep)" />
               </div>
-            )}
-          </Stagger>
+              <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--color-near-black)', marginBottom: 6 }}>
+                Keine Treffer
+              </div>
+              <div style={{ fontSize: 14, color: 'var(--color-fg-secondary)', maxWidth: 380, margin: '0 auto 22px', lineHeight: 1.55 }}>
+                Diese Filter-Kombination ergibt aktuell kein Format. Setze die Filter zurück, um alle Optionen zu sehen.
+              </div>
+              <Btn variant="primary" size="md" onClick={() => { setFmt('Alle'); setAud('Alle'); }}>
+                Filter zurücksetzen
+              </Btn>
+            </div>
+          ) : (
+            <Stagger step={80} y={24} style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+              {filtered.map(f => <FormatTeaserCard key={f.id} f={f} go={go} />)}
+            </Stagger>
+          )}
         </Container>
       </section>
     </div>

@@ -116,27 +116,107 @@ const App = () => {
 
 // ─── Admin stub for secondary admin pages ────────────────────
 const AdminStub = ({ go, route }) => {
-  const titles = {
-    'admin-modules':      ['Module', 'Übersicht aller Module quer durch Pfade und Einzelformate.'],
-    'admin-instructors':  ['Referent:innen', 'Profile, Honorare, gebuchte Module.'],
-    'admin-participants': ['Teilnehmer:innen', 'Aktive Konten, Kohorten-Zuordnungen, Kommunikation.'],
-    'admin-orders':       ['Bestellungen', 'Alle Zahlungen, Rechnungen und Rückerstattungen.'],
-    'admin-settings':     ['Einstellungen', 'Akademie-weite Konfiguration: MwSt., Stripe, E-Mail-Templates.'],
+  const config = {
+    'admin-modules': {
+      title: 'Module', kicker: 'Übersicht aller Module quer durch Pfade und Einzelformate.',
+      icon: 'video',
+      bullets: [
+        'Filter nach Pfad, Format und Referent:in',
+        'Bulk-Edit von Terminen, Referent:innen und Materialien',
+        'Statusanzeige (Entwurf · Live · Archiviert) je Modul',
+        'Direkt-Sprung zur Modul-Bearbeitung',
+      ],
+    },
+    'admin-instructors': {
+      title: 'Referent:innen', kicker: 'Profile, Honorare, gebuchte Module.',
+      icon: 'users',
+      bullets: [
+        'Liste aller Referent:innen mit Bio, Foto und Schwerpunkten',
+        'Gebuchte Module je Person, mit Konflikt-Warnungen',
+        'Honorar-Übersicht und Zahlungsstatus',
+        'Einladungs-Workflow für neue Referent:innen',
+      ],
+    },
+    'admin-participants': {
+      title: 'Teilnehmer:innen', kicker: 'Aktive Konten, Kohorten-Zuordnungen, Kommunikation.',
+      icon: 'user',
+      bullets: [
+        'Konto-Liste mit Kohorten-Zuordnung und Fortschritt',
+        'Direkter E-Mail-/Nachrichten-Versand pro Person',
+        'Filter: aktive Kohorte, abgeschlossen, abgemeldet',
+        'Export für Reporting und Zertifikat-Erstellung',
+      ],
+    },
+    'admin-orders': {
+      title: 'Bestellungen', kicker: 'Alle Zahlungen, Rechnungen und Rückerstattungen.',
+      icon: 'file',
+      bullets: [
+        'Bestell-Tabelle mit Status, Betrag und Zahlungsmethode',
+        'Rechnungs-PDFs auf Knopfdruck (Stripe-Sync)',
+        'Stornierungen und Rückerstattungen mit Audit-Log',
+        'Umsatz-Dashboard je Pfad und Monat',
+      ],
+    },
+    'admin-settings': {
+      title: 'Einstellungen', kicker: 'Akademie-weite Konfiguration: MwSt., Stripe, E-Mail-Templates.',
+      icon: 'settings',
+      bullets: [
+        'Stripe-Schlüssel und Webhook-Endpunkte',
+        'MwSt.-Sätze pro Land und Rechnungs-Footer',
+        'E-Mail-Templates: Buchung, Erinnerung, Zertifikat',
+        'Marken-Assets: Logo, Farben, Open-Badge-Image',
+      ],
+    },
   };
-  const [t, sub] = titles[route] || ['', ''];
+  const cfg = config[route] || { title: '', kicker: '', icon: 'settings', bullets: [] };
   return (
     <div>
-      <AdminTopBar title={t} kicker={sub} />
+      <AdminTopBar title={cfg.title} kicker={cfg.kicker} />
       <div style={{ padding: 36 }}>
-        <SoftCard padding={56} style={{ textAlign: 'center' }}>
-          <Icon name="settings" size={28} color="var(--color-fg-secondary)" />
-          <div style={{ fontSize: 18, fontWeight: 800, marginTop: 14 }}>{t}</div>
-          <div style={{ fontSize: 13, color: 'var(--color-fg-secondary)', marginTop: 6, maxWidth: 360, marginLeft: 'auto', marginRight: 'auto' }}>
-            Diese Sektion zeigt im Prototyp den Sidebar-Eintrag, die Detail-Ansicht ist nicht Teil dieses Bausatzes.
+        <SoftCard padding={48} style={{ maxWidth: 720, margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 26 }}>
+            <div style={{
+              width: 52, height: 52, borderRadius: 14,
+              background: 'var(--color-lavender-xlight)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <Icon name={cfg.icon} size={24} color="var(--color-lavender-deep)" />
+            </div>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--color-lavender-deep)', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 4 }}>
+                Im Aufbau
+              </div>
+              <div style={{ fontSize: 19, fontWeight: 800, letterSpacing: '-0.015em' }}>
+                Was hier erscheinen wird
+              </div>
+            </div>
           </div>
-          <div style={{ marginTop: 18 }}>
-            <Btn variant="secondary" size="sm" onClick={() => go('admin')}>Zurück zum Dashboard</Btn>
+          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {cfg.bullets.map((b, i) => (
+              <li key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                <span style={{
+                  flexShrink: 0, marginTop: 2,
+                  width: 22, height: 22, borderRadius: 6,
+                  background: 'var(--color-bg)', border: '1px solid var(--color-border)',
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 10, fontWeight: 800, color: 'var(--color-lavender-deep)',
+                }}>{i + 1}</span>
+                <span style={{ fontSize: 13.5, color: 'var(--color-dark)', lineHeight: 1.6 }}>{b}</span>
+              </li>
+            ))}
+          </ul>
+          <div style={{
+            fontSize: 12, color: 'var(--color-fg-secondary)',
+            background: 'var(--color-bg)',
+            border: '1px dashed var(--color-border)',
+            borderRadius: 10, padding: '12px 16px', marginBottom: 20,
+            lineHeight: 1.55,
+          }}>
+            Diese Detail-Ansicht wird in einer späteren Iteration ausgebaut. Der Prototyp zeigt aktuell den Sidebar-Eintrag und den geplanten Umfang.
           </div>
+          <Btn variant="secondary" size="sm" onClick={() => go('admin')}>
+            <Icon name="arrowLeft" size={13} /> Zurück zum Dashboard
+          </Btn>
         </SoftCard>
       </div>
     </div>

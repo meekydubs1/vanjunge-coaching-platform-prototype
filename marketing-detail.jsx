@@ -2,18 +2,38 @@
 // Editorial layouts with scroll reveals, parallax certificate, refined typography.
 
 // ─── Path detail (canonical: Professional) ──────────────────
-const PathDetailPage = ({ go, pathId }) => {
+const PathDetailPage = ({ go, pathId, setSelectedPath }) => {
   const path = VJ.paths.find(p => p.id === pathId) || VJ.paths[1];
   const [openIdx, setOpenIdx] = React.useState(null);
   const [openFaq, setOpenFaq] = React.useState(null);
+  const heroCtaRef = React.useRef(null);
+  const [barVisible, setBarVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!heroCtaRef.current) return;
+    const el = heroCtaRef.current;
+    const io = new IntersectionObserver(
+      ([entry]) => { setBarVisible(!entry.isIntersecting); },
+      { threshold: 0, rootMargin: '-72px 0px 0px 0px' },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [pathId]);
+
+  const goCheckout = () => { if (setSelectedPath) setSelectedPath(path.id); go('checkout'); };
 
   return (
     <div className="route-fade" style={{ paddingBottom: 96 }}>
-      {/* Sticky CTA bar */}
+      {/* Sticky CTA bar, hidden until the hero CTA scrolls past the top */}
       <div className="vj-glass-dark" style={{
         position: 'sticky', top: 72, zIndex: 50,
         color: 'var(--color-fg-on-dark)',
+        borderTop: '1px solid rgba(213,191,255,0.15)',
         borderBottom: '1px solid rgba(255,255,255,0.08)',
+        opacity: barVisible ? 1 : 0,
+        transform: barVisible ? 'translateY(0)' : 'translateY(-8px)',
+        pointerEvents: barVisible ? 'auto' : 'none',
+        transition: 'opacity 300ms ease, transform 300ms cubic-bezier(.2,.8,.2,1)',
       }}>
         <Container>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0', gap: 16 }}>
@@ -28,7 +48,7 @@ const PathDetailPage = ({ go, pathId }) => {
               <span className="vj-num" style={{ fontSize: 20, fontWeight: 900, letterSpacing: '-0.02em' }}>{VJ.priceFmt(path.price)}</span>
               <span style={{ fontSize: 11, color: '#a09eac' }}>netto zzgl. MwSt.</span>
               <Magnetic strength={0.18}>
-                <Btn variant="primaryDark" size="md" onClick={() => go('checkout')}>Jetzt buchen <Icon name="arrow" size={13} /></Btn>
+                <Btn variant="primaryDark" size="md" onClick={goCheckout}>Jetzt buchen <Icon name="arrow" size={13} /></Btn>
               </Magnetic>
             </div>
           </div>
@@ -97,9 +117,19 @@ const PathDetailPage = ({ go, pathId }) => {
                   <div style={{ fontSize: 12.5, color: 'var(--color-fg-secondary)', marginBottom: 18, lineHeight: 1.55 }}>
                     Inkl. 19 % MwSt.: <strong>{VJ.priceFmt(Math.round(path.price * 1.19))}</strong> · Auf Rechnung oder per Karte
                   </div>
-                  <Btn variant="primary" size="lg" full className="vj-cta-primary" onClick={() => go('checkout')}>
-                    Jetzt für {path.name.split(' ')[1]} buchen
-                  </Btn>
+                  {/* Key benefits — direct value at the moment of decision */}
+                  <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 18px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {path.features.slice(0, 3).map((f, i) => (
+                      <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 13, color: 'var(--color-dark)', lineHeight: 1.45 }}>
+                        <Icon name="check" size={14} color="var(--color-lavender-deep)" strokeWidth={2.4} /> {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <div ref={heroCtaRef}>
+                    <Btn variant="primary" size="lg" full className="vj-cta-primary" onClick={goCheckout}>
+                      Jetzt für {path.name.split(' ')[1]} buchen
+                    </Btn>
+                  </div>
                   <div style={{ marginTop: 14, fontSize: 11.5, textAlign: 'center', color: 'var(--color-fg-secondary)' }}>
                     14 Tage Widerrufsrecht · Sichere Zahlung über Stripe
                   </div>
@@ -257,10 +287,10 @@ const CertificatePreview = ({ pathName }) => (
     boxShadow: '0 32px 80px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.45)',
     position: 'relative', overflow: 'hidden',
   }}>
-    {/* subtle texture lines */}
+    {/* subtle texture lines, dialed back for a less scanner-artefact feel */}
     <div aria-hidden style={{
-      position: 'absolute', inset: 0, opacity: 0.06, pointerEvents: 'none',
-      backgroundImage: 'repeating-linear-gradient(45deg, transparent 0 8px, var(--color-near-black) 8px 9px)',
+      position: 'absolute', inset: 0, opacity: 0.03, pointerEvents: 'none',
+      backgroundImage: 'repeating-linear-gradient(45deg, transparent 0 10px, var(--color-near-black) 10px 11px)',
     }} />
     <div style={{ position: 'relative' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 36 }}>
@@ -348,7 +378,7 @@ const FormatDetailPage = ({ go, formatId }) => {
                     ['user', 'Referentin', f.instructor],
                     ['users', 'Max. Teilnehmende', '14 · live via Zoom'],
                   ].map(([icon, label, val]) => (
-                    <div key={label}>
+                    <div key={label} style={{ borderLeft: '2px solid var(--color-lavender-xlight)', paddingLeft: 14 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: 'var(--color-lavender-oil)', fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', marginBottom: 8 }}>
                         <Icon name={icon} size={13} color="var(--color-lavender-oil)" />{label}
                       </div>
@@ -365,9 +395,17 @@ const FormatDetailPage = ({ go, formatId }) => {
                     <span className="vj-num" style={{ fontSize: 48, fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 0.9 }}>{VJ.priceFmt(f.price)}</span>
                     <span style={{ fontSize: 13, color: 'var(--color-fg-secondary)' }}>netto</span>
                   </div>
-                  <div style={{ fontSize: 12.5, color: 'var(--color-fg-secondary)', marginBottom: 26 }}>
+                  <div style={{ fontSize: 12.5, color: 'var(--color-fg-secondary)', marginBottom: 22 }}>
                     Brutto inkl. 19 % MwSt.: <strong>{VJ.priceFmt(Math.round(f.price * 1.19))}</strong>
                   </div>
+                  {/* Key benefits — value at the moment of decision */}
+                  <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 22px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {materials.slice(0, 3).map((m, i) => (
+                      <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 13, color: 'var(--color-dark)', lineHeight: 1.45 }}>
+                        <Icon name="check" size={14} color="var(--color-lavender-deep)" strokeWidth={2.4} /> {m}
+                      </li>
+                    ))}
+                  </ul>
                   <Btn variant="primary" size="lg" full className="vj-cta-primary" onClick={() => go('checkout')}>
                     Platz reservieren <Icon name="arrow" size={14} />
                   </Btn>
@@ -457,16 +495,35 @@ const AboutPage = ({ go }) => (
         <Reveal>
           <div className="vj-eyebrow-rule" style={{ marginBottom: 32 }}>Drei Prinzipien</div>
         </Reveal>
-        <Stagger step={140} y={32} style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+        {/* Differentiated layout: oversized initial + horizontal stacked cards
+            to break the repeating 3-card-grid pattern used elsewhere */}
+        <Stagger step={140} y={32} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           {[
-            ['Psychologisch fundiert', 'Jede Methode hat einen Mechanismus. Wir benennen ihn, und seine Grenzen.'],
-            ['Wissenschaftlich verantwortet', 'Studien, Kontrollfragen, Replikationen. Keine Buzzwords ohne Evidenz.'],
-            ['Professionell entwickelt', 'Kuratiert wie ein Verlagsprogramm, kein Algorithmus, kein Funnel.'],
-          ].map(([t, d], i) => (
-            <div key={t} className="vj-card" style={{ background: 'var(--color-bg-card)', borderRadius: 18, padding: 32, border: '1px solid var(--color-border)' }}>
-              <span className="vj-pin" style={{ marginBottom: 20 }}>0{i+1}</span>
-              <div style={{ fontSize: 20, fontWeight: 800, marginTop: 14, marginBottom: 12, letterSpacing: '-0.015em' }}>{t}</div>
-              <p style={{ fontSize: 14, color: 'var(--color-fg-secondary)', lineHeight: 1.75, margin: 0 }}>{d}</p>
+            ['P', 'Psychologisch fundiert', 'Jede Methode hat einen Mechanismus. Wir benennen ihn, und seine Grenzen.'],
+            ['W', 'Wissenschaftlich verantwortet', 'Studien, Kontrollfragen, Replikationen. Keine Buzzwords ohne Evidenz.'],
+            ['P', 'Professionell entwickelt', 'Kuratiert wie ein Verlagsprogramm, kein Algorithmus, kein Funnel.'],
+          ].map(([letter, t, d], i) => (
+            <div key={t} className="vj-card" style={{
+              background: 'var(--color-bg-card)', borderRadius: 18,
+              padding: '36px 40px', border: '1px solid var(--color-border)',
+              display: 'grid', gridTemplateColumns: '160px 1fr', gap: 36, alignItems: 'center',
+              position: 'relative', overflow: 'hidden',
+            }}>
+              <div aria-hidden style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(120px, 12vw, 180px)', fontWeight: 900,
+                color: 'var(--color-lavender-deep)', opacity: 0.12,
+                lineHeight: 0.85, letterSpacing: '-0.04em',
+                fontStyle: 'italic',
+                textAlign: 'center',
+              }}>{letter}</div>
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--color-lavender-deep)', marginBottom: 8 }}>
+                  Prinzip 0{i+1}
+                </div>
+                <div style={{ fontSize: 24, fontWeight: 800, marginBottom: 10, letterSpacing: '-0.02em', fontFamily: 'var(--font-display)' }}>{t}</div>
+                <p style={{ fontSize: 15, color: 'var(--color-fg-secondary)', lineHeight: 1.7, margin: 0, maxWidth: 620 }}>{d}</p>
+              </div>
             </div>
           ))}
         </Stagger>
@@ -519,6 +576,12 @@ const InstructorsPage = () => (
 // ─── Contact ────────────────────────────────────────────────
 const ContactPage = () => {
   const [sent, setSent] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const submit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => { setLoading(false); setSent(true); }, 900);
+  };
   return (
     <div className="route-fade">
       <section style={{ padding: '112px 0', background: 'var(--color-bg-card)' }}>
@@ -545,22 +608,33 @@ const ContactPage = () => {
             </Reveal>
           ) : (
             <Reveal delay={240}>
-              <form onSubmit={e => { e.preventDefault(); setSent(true); }} style={{ marginTop: 40, display: 'grid', gap: 20 }}>
+              <form onSubmit={submit} style={{ marginTop: 40, display: 'grid', gap: 20 }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
                   <Field label="Name" required><Input placeholder="Dein Name" required /></Field>
                   <Field label="E-Mail" required><Input type="email" placeholder="du@beispiel.de" required /></Field>
                 </div>
-                <Field label="Berufsfeld">
+                <Field label="Berufsfeld (optional)">
                   <Select defaultValue="">
-                    <option value="" disabled>Bitte wählen</option>
-                    {VJ.audiences.map(a => <option key={a.key}>{a.name}</option>)}
+                    <option value="">— keine Angabe</option>
+                    {VJ.audiences.map(a => <option key={a.key} value={a.key}>{a.name}</option>)}
                   </Select>
                 </Field>
                 <Field label="Deine Frage" required>
                   <Textarea rows={5} placeholder="Worum geht es?" required />
                 </Field>
                 <Magnetic strength={0.18}>
-                  <Btn type="submit" variant="primary" size="lg" className="vj-cta-primary" style={{ justifySelf: 'flex-start', paddingLeft: 36, paddingRight: 36 }}>Nachricht senden <Icon name="arrow" size={14} /></Btn>
+                  <Btn type="submit" variant="primary" size="lg" disabled={loading} className="vj-cta-primary" style={{ justifySelf: 'flex-start', paddingLeft: 36, paddingRight: 36 }}>
+                    {loading ? (
+                      <>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" style={{ animation: 'vj-rotate 900ms linear infinite' }}>
+                          <circle cx="12" cy="12" r="9" strokeDasharray="40 60" />
+                        </svg>
+                        Wird gesendet…
+                      </>
+                    ) : (
+                      <>Nachricht senden <Icon name="arrow" size={14} /></>
+                    )}
+                  </Btn>
                 </Magnetic>
               </form>
             </Reveal>
@@ -572,11 +646,11 @@ const ContactPage = () => {
 };
 
 // ─── FAQ ────────────────────────────────────────────────────
-const FaqPage = () => {
+const FaqPage = ({ go }) => {
   const [open, setOpen] = React.useState(0);
   return (
     <div className="route-fade">
-      <section style={{ padding: '112px 0', background: 'var(--color-bg-card)' }}>
+      <section style={{ padding: '112px 0 56px', background: 'var(--color-bg-card)' }}>
         <Container maxW={900}>
           <Reveal>
             <Eyebrow style={{ marginBottom: 14 }}>FAQ</Eyebrow>
@@ -588,6 +662,37 @@ const FaqPage = () => {
             {VJ.faqs.map((f, i) => (
               <Disclosure key={i} title={f.q} open={open === i} onToggle={() => setOpen(open === i ? null : i)}>{f.a}</Disclosure>
             ))}
+          </Reveal>
+        </Container>
+      </section>
+      <section style={{ padding: '32px 0 112px', background: 'var(--color-bg-card)' }}>
+        <Container maxW={900}>
+          <Reveal>
+            <div style={{
+              background: 'var(--color-bg)', borderRadius: 18,
+              border: '1px solid var(--color-border)',
+              padding: '36px 40px',
+              display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: 28, alignItems: 'center',
+            }}>
+              <div style={{
+                width: 56, height: 56, borderRadius: '50%',
+                background: 'var(--color-lavender-xlight)',
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <Avatar name="Miriam Junge" src="assets/photo-miriam.jpg" size={56} />
+              </div>
+              <div>
+                <div style={{ fontSize: 18, fontWeight: 800, letterSpacing: '-0.015em', marginBottom: 4, color: 'var(--color-near-black)' }}>
+                  Deine Frage nicht dabei?
+                </div>
+                <div style={{ fontSize: 14, color: 'var(--color-fg-secondary)', lineHeight: 1.55 }}>
+                  Schreib uns, Miriam antwortet persönlich, innerhalb von zwei Werktagen.
+                </div>
+              </div>
+              <Btn variant="primary" size="md" onClick={() => go && go('contact')}>
+                Nachricht senden <Icon name="arrow" size={13} />
+              </Btn>
+            </div>
           </Reveal>
         </Container>
       </section>

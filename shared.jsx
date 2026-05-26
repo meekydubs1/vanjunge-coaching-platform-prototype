@@ -7,14 +7,14 @@ const Eyebrow = ({ children, color = 'var(--color-lavender-oil)', style }) => (
   }}>{children}</div>
 );
 
-const Btn = ({ children, variant = 'primary', size = 'md', onClick, style, disabled, type, full }) => {
+const Btn = ({ children, variant = 'primary', size = 'md', onClick, style, disabled, type, full, className, ...rest }) => {
   const base = {
     border: 'none',
     borderRadius: 9999,
     fontWeight: 700,
     fontFamily: 'var(--font-primary)',
     cursor: disabled ? 'not-allowed' : 'pointer',
-    transition: 'background 180ms ease, color 180ms ease, transform 120ms ease',
+    transition: 'background 180ms ease, color 180ms ease, transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 240ms ease',
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
     width: full ? '100%' : undefined,
     opacity: disabled ? 0.5 : 1,
@@ -25,16 +25,19 @@ const Btn = ({ children, variant = 'primary', size = 'md', onClick, style, disab
     lg: { padding: '15px 32px', fontSize: 15 },
   };
   const variants = {
-    primary:   { background: 'var(--color-lavender-oil)', color: 'var(--color-near-black)' },
+    primary:   { background: 'var(--color-lavender-deep)', color: '#ffffff' },
     primaryDark: { background: 'var(--color-lemon-light)', color: 'var(--color-near-black)' },
     secondary: { background: 'transparent', color: 'var(--color-near-black)', border: '1.5px solid rgba(48,47,56,0.18)' },
     ghost:     { background: 'transparent', color: 'var(--color-fg-secondary)' },
     danger:    { background: 'transparent', color: '#c25151', border: '1.5px solid rgba(194,81,81,0.30)' },
     dark:      { background: 'var(--color-near-black)', color: 'var(--color-lavender-bg)' },
   };
+  const cls = ['vj-btn', `vj-btn-${variant}`, disabled ? 'vj-btn-disabled' : '', className || ''].filter(Boolean).join(' ');
   return (
     <button type={type || 'button'} disabled={disabled} onClick={onClick}
+      className={cls}
       style={{ ...base, ...sizes[size], ...variants[variant], ...style }}
+      {...rest}
     >{children}</button>
   );
 };

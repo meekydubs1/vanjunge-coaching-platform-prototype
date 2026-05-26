@@ -1,10 +1,10 @@
 // auth-checkout.jsx, Register, Login, Checkout
 
 // ─── Auth shared shell ───────────────────────────────────────
-const AuthShell = ({ children, side }) => (
-  <div style={{ minHeight: 'calc(100vh - 72px)', display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', background: 'var(--color-bg-card)' }}>
+const AuthShell = ({ children, mode }) => (
+  <div style={{ minHeight: 'calc(100vh - 72px)', display: 'grid', gridTemplateColumns: '1fr 1fr', background: 'var(--color-bg-card)' }}>
     <div style={{ padding: '88px 64px 56px', display: 'flex', flexDirection: 'column' }}>
-      <Container style={{ padding: 0, maxWidth: 460, width: '100%', margin: '0 auto' }}>
+      <Container style={{ padding: 0, maxWidth: 440, width: '100%', margin: '0 auto' }}>
         {children}
       </Container>
     </div>
@@ -15,15 +15,18 @@ const AuthShell = ({ children, side }) => (
       borderLeft: '1px solid var(--color-border)',
       position: 'relative', overflow: 'hidden',
     }}>
-      <BackgroundOrbs variant="light" count={2} />
+      {/* Isolate orb overflow */}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+        <BackgroundOrbs variant="light" count={2} />
+      </div>
       <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', height: '100%' }}>
-        {side || <AuthSidePanel />}
+        {mode === 'login' ? <AuthSidePanelLogin /> : <AuthSidePanelRegister />}
       </div>
     </div>
   </div>
 );
 
-const AuthSidePanel = () => (
+const AuthSidePanelRegister = () => (
   <>
     <div>
       <Reveal>
@@ -60,6 +63,64 @@ const AuthSidePanel = () => (
   </>
 );
 
+// Login side — context for a returning user, not a sales pitch
+const AuthSidePanelLogin = () => (
+  <>
+    <div>
+      <Reveal>
+        <Eyebrow color="var(--color-dark)" style={{ marginBottom: 22 }}>Lernbereich</Eyebrow>
+        <h2 style={{ fontSize: 'clamp(34px, 3.6vw, 48px)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.04, margin: 0, maxWidth: 460 }}>
+          Willkommen zurück.<br />
+          <span style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--color-dark)' }}>Dein Kurs wartet.</span>
+        </h2>
+      </Reveal>
+      <Reveal delay={180}>
+        <p style={{ fontSize: 15, color: 'var(--color-dark)', lineHeight: 1.7, marginTop: 22, maxWidth: 380 }}>
+          Du hast die letzte Live-Session verpasst? Die Aufzeichnung liegt schon im Lernbereich bereit.
+        </p>
+      </Reveal>
+    </div>
+    <Reveal delay={300}>
+      <div style={{ marginTop: 'auto' }}>
+        <Card style={{ background: 'rgba(255,255,255,0.82)', backdropFilter: 'blur(10px)', boxShadow: '0 16px 40px rgba(48,47,56,0.10)' }} padding={24}>
+          <div style={{ fontSize: 11.5, color: 'var(--color-fg-secondary)', fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 14 }}>Dein Fortschritt</div>
+          <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--color-near-black)', marginBottom: 4 }}>VanJunge Professional</div>
+          <div style={{ fontSize: 12.5, color: 'var(--color-fg-secondary)', marginBottom: 16 }}>Woche 4 von 9 · nächste Live-Session morgen</div>
+          <Progress value={4} total={9} label="Module abgeschlossen" />
+          <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', gap: 10, fontSize: 12.5, color: 'var(--color-near-black)' }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--color-lavender-deep)', animation: 'vj-pulse 2s ease-in-out infinite' }} />
+            Modul 5 — Fragetechniken in schwierigen Gesprächen
+          </div>
+        </Card>
+      </div>
+    </Reveal>
+  </>
+);
+
+// Password field with show/hide toggle
+const PasswordInput = ({ value, onChange, placeholder, required }) => {
+  const [show, setShow] = React.useState(false);
+  return (
+    <div style={{ position: 'relative' }}>
+      <Input
+        type={show ? 'text' : 'password'}
+        value={value} onChange={onChange}
+        placeholder={placeholder} required={required}
+        style={{ paddingRight: 44 }}
+      />
+      <button type="button" onClick={() => setShow(s => !s)} aria-label={show ? 'Passwort verbergen' : 'Passwort anzeigen'} aria-pressed={show} style={{
+        position: 'absolute', top: '50%', right: 10, transform: 'translateY(-50%)',
+        background: 'transparent', border: 'none', cursor: 'pointer',
+        padding: 6, color: 'var(--color-fg-secondary)',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        borderRadius: 6,
+      }}>
+        <Icon name="eye" size={16} color={show ? 'var(--color-lavender-deep)' : 'currentColor'} />
+      </button>
+    </div>
+  );
+};
+
 // ─── Register ────────────────────────────────────────────────
 const RegisterPage = ({ go, setAuthed }) => {
   const [form, setForm] = React.useState({ name: '', email: '', pw: '', field: '', accept: false });
@@ -68,7 +129,7 @@ const RegisterPage = ({ go, setAuthed }) => {
   const submit = e => { e.preventDefault(); if (!valid) return; setAuthed(true); go('dashboard'); };
 
   return (
-    <AuthShell>
+    <AuthShell mode="register">
       <button onClick={() => go('home')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: 'var(--color-fg-secondary)', marginBottom: 28 }}>
         <Icon name="arrowLeft" size={14} /> Zurück zur Startseite
       </button>
@@ -85,7 +146,7 @@ const RegisterPage = ({ go, setAuthed }) => {
           <Input type="email" value={form.email} onChange={e => update('email', e.target.value)} placeholder="du@beispiel.de" required />
         </Field>
         <Field label="Passwort" required hint="Min. 8 Zeichen">
-          <Input type="password" value={form.pw} onChange={e => update('pw', e.target.value)} placeholder="••••••••" required />
+          <PasswordInput value={form.pw} onChange={e => update('pw', e.target.value)} placeholder="••••••••" required />
         </Field>
         <Field label="Berufsfeld" required>
           <Select value={form.field} onChange={e => update('field', e.target.value)} required>
@@ -112,7 +173,7 @@ const LoginPage = ({ go, setAuthed }) => {
   const [pw, setPw] = React.useState('demo-password');
   const submit = e => { e.preventDefault(); setAuthed(true); go('dashboard'); };
   return (
-    <AuthShell>
+    <AuthShell mode="login">
       <button onClick={() => go('home')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: 'var(--color-fg-secondary)', marginBottom: 28 }}>
         <Icon name="arrowLeft" size={14} /> Zurück zur Startseite
       </button>
@@ -126,7 +187,7 @@ const LoginPage = ({ go, setAuthed }) => {
           <Input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="du@beispiel.de" required />
         </Field>
         <Field label="Passwort" hint={<InlineLink color="var(--color-fg-secondary)">Passwort vergessen?</InlineLink>} required>
-          <Input type="password" value={pw} onChange={e => setPw(e.target.value)} placeholder="••••••••" required />
+          <PasswordInput value={pw} onChange={e => setPw(e.target.value)} placeholder="••••••••" required />
         </Field>
         <label style={{ display: 'flex', gap: 8, alignItems: 'center', fontSize: 12.5, color: 'var(--color-fg-secondary)' }}>
           <input type="checkbox" defaultChecked style={{ accentColor: 'var(--color-lavender-oil)' }} /> Auf diesem Gerät angemeldet bleiben
@@ -145,8 +206,8 @@ const LoginPage = ({ go, setAuthed }) => {
 };
 
 // ─── Checkout ────────────────────────────────────────────────
-const CheckoutPage = ({ go, setAuthed }) => {
-  const path = VJ.paths.find(p => p.id === 'professional');
+const CheckoutPage = ({ go, setAuthed, pathId }) => {
+  const path = VJ.paths.find(p => p.id === pathId) || VJ.paths.find(p => p.id === 'professional');
   const price = VJ.priceWithMwSt(path.price);
   const [billing, setBilling] = React.useState({ company: '', name: VJ.user.name, vat: '', street: '', plz: '', city: '', country: 'Deutschland' });
   const [method, setMethod] = React.useState('card');
@@ -164,20 +225,25 @@ const CheckoutPage = ({ go, setAuthed }) => {
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       position: 'relative', overflow: 'hidden',
     }}>
-      <BackgroundOrbs variant="light" count={3} />
-      {/* Confetti-ish radiating petals */}
-      <div aria-hidden style={{ position: 'absolute', inset: 0 }}>
-        {Array.from({ length: 12 }).map((_, i) => (
-          <span key={i} style={{
-            position: 'absolute', top: '50%', left: '50%',
-            width: 8, height: 8, borderRadius: '50%',
-            background: i % 2 ? 'var(--color-lavender-oil)' : 'var(--color-lemon-light)',
-            transform: `rotate(${i * 30}deg) translateY(-120px)`,
-            transformOrigin: '50% 120px',
-            opacity: 0.7,
-            animation: `vj-float ${3 + (i % 4)}s ease-in-out ${i * 0.12}s infinite`,
-          }} />
-        ))}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+        <BackgroundOrbs variant="light" count={2} />
+      </div>
+      {/* Calmer brand-aligned confetti: small lavender/lemon squares falling in a soft arc */}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+        {Array.from({ length: 14 }).map((_, i) => {
+          const xStart = 30 + i * 5; // % horizontal start
+          const drift = ((i % 5) - 2) * 18; // px lateral drift
+          const delay = i * 70;
+          const color = i % 3 === 0 ? 'var(--color-lemon-light)' : 'var(--color-lavender-deep)';
+          return (
+            <span key={i} className="vj-confetti-dot" style={{
+              left: `${xStart}%`, top: '38%',
+              background: color,
+              '--vj-x': `${drift}px`,
+              animationDelay: `${delay}ms`,
+            }} />
+          );
+        })}
       </div>
       <Card padding={56} style={{
         textAlign: 'center', maxWidth: 500, position: 'relative', zIndex: 2,
@@ -190,8 +256,9 @@ const CheckoutPage = ({ go, setAuthed }) => {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           margin: '0 auto 28px',
           boxShadow: '0 0 0 8px rgba(180,142,249,0.12), 0 0 0 16px rgba(180,142,249,0.06)',
+          animation: 'vj-pulse 2.4s ease-in-out infinite',
         }}>
-          <Icon name="check" size={44} color="var(--color-lavender-oil)" strokeWidth={2.4} />
+          <Icon name="check" size={44} color="var(--color-lavender-deep)" strokeWidth={2.4} />
         </div>
         <Eyebrow style={{ marginBottom: 10 }}>Willkommen in der Akademie</Eyebrow>
         <h2 style={{ fontSize: 34, fontWeight: 800, letterSpacing: '-0.025em', margin: 0, lineHeight: 1.1 }}>Buchung bestätigt.</h2>
@@ -213,7 +280,7 @@ const CheckoutPage = ({ go, setAuthed }) => {
       </div>
 
       <Container style={{ padding: '48px 32px 96px' }}>
-        <button onClick={() => go('path-professional')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: 'var(--color-fg-secondary)', marginBottom: 22 }}>
+        <button onClick={() => go('path-' + path.id)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: 'var(--color-fg-secondary)', marginBottom: 22 }}>
           <Icon name="arrowLeft" size={14} /> Zurück zum Pfad
         </button>
         <h1 style={{ fontSize: 36, fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 36px' }}>Checkout</h1>
@@ -305,8 +372,11 @@ const CheckoutPage = ({ go, setAuthed }) => {
                     <div style={{ padding: '12px 14px', background: 'var(--color-bg-card)', borderRadius: 8, fontSize: 14, color: 'var(--color-fg-secondary)', fontFamily: 'monospace' }}>MM / JJ</div>
                     <div style={{ padding: '12px 14px', background: 'var(--color-bg-card)', borderRadius: 8, fontSize: 14, color: 'var(--color-fg-secondary)', fontFamily: 'monospace' }}>CVC</div>
                   </div>
-                  <div style={{ fontSize: 11, color: 'var(--color-fg-secondary)', marginTop: 10, lineHeight: 1.5, display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <Icon name="lock" size={12} /> Wird im Produktiv-Build durch Stripe Elements ersetzt, Daten gehen niemals durch den VanJunge-Server.
+                  <div style={{ fontSize: 11, color: 'var(--color-fg-secondary)', marginTop: 10, lineHeight: 1.5, display: 'flex', alignItems: 'flex-start', gap: 6 }}>
+                    <Icon name="lock" size={12} />
+                    <span>
+                      <strong>Im Live-System erscheint hier das sichere Stripe-Formular.</strong> Daten gehen niemals durch den VanJunge-Server.
+                    </span>
                   </div>
                 </div>
               </div>
@@ -349,9 +419,9 @@ const CheckoutPage = ({ go, setAuthed }) => {
             </div>
 
             <label style={{ display: 'flex', gap: 12, alignItems: 'flex-start', fontSize: 12.5, color: 'var(--color-fg-secondary)', lineHeight: 1.55, marginBottom: 20 }}>
-              <input type="checkbox" defaultChecked style={{ marginTop: 3, accentColor: 'var(--color-lavender-oil)' }} required />
+              <input type="checkbox" defaultChecked style={{ marginTop: 3, accentColor: 'var(--color-lavender-deep)' }} required />
               <span>
-                Ich willige ein, dass mit der Erbringung der Dienstleistung vor Ablauf der Widerrufsfrist begonnen wird. Mit Beginn verliere ich mein Widerrufsrecht.
+                Ich möchte, dass die Akademie den Zugang zu meinen Kursunterlagen sofort bereitstellt. Ich habe das Widerrufsrecht zur Kenntnis genommen (14 Tage ab Buchung, ausgenommen bereits stattgefundene Sessions).
               </span>
             </label>
 

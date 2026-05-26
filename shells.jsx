@@ -17,29 +17,31 @@ const PublicNav = ({ go, route, authed }) => {
     { label: 'Kontakt',         route: 'contact' },
   ];
   return (
-    <nav style={{
+    <nav aria-label="Hauptnavigation" style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       padding: '0 32px',
       height: scrolled ? 60 : 76,
-      background: scrolled ? 'rgba(243,240,250,0.80)' : 'rgba(243,240,250,0.45)',
+      background: scrolled ? 'rgba(236,234,244,0.85)' : 'rgba(236,234,244,0.55)',
       backdropFilter: 'saturate(160%) blur(16px)',
       WebkitBackdropFilter: 'saturate(160%) blur(16px)',
       borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
       position: 'sticky', top: 0, zIndex: 100,
       transition: 'height 320ms cubic-bezier(.2,.8,.2,1), background 320ms ease, border-color 320ms ease',
     }}>
-      <Logo onClick={() => go('home')} size={scrolled ? 16 : 18} />
+      <Logo onClick={() => go('home')} size={scrolled ? 16 : 20} />
       <ul style={{ display: 'flex', gap: 4, margin: 0, padding: 0, listStyle: 'none' }}>
         {links.map(l => {
           const active = route === l.route || (l.route === 'catalogue' && (route.startsWith('path-') || route.startsWith('format-')));
           return (
             <li key={l.route}>
-              <button onClick={() => go(l.route)} className="vj-link" style={{
-                fontSize: 13.5, fontWeight: 500,
+              <button onClick={() => go(l.route)} className="vj-link" aria-current={active ? 'page' : undefined} style={{
+                fontSize: 13.5, fontWeight: active ? 700 : 500,
                 color: active ? 'var(--color-near-black)' : 'var(--color-dark)',
                 padding: '8px 14px', borderRadius: 9999,
-                background: active ? 'rgba(255,255,255,0.6)' : 'transparent',
-                transition: 'background 240ms ease, color 240ms ease',
+                background: active ? 'var(--color-bg-card)' : 'transparent',
+                border: active ? '1px solid var(--color-border)' : '1px solid transparent',
+                boxShadow: active ? 'inset 0 -2px 0 var(--color-lavender-deep)' : 'none',
+                transition: 'background 240ms ease, color 240ms ease, box-shadow 240ms ease',
               }}>{l.label}</button>
             </li>
           );
@@ -88,7 +90,7 @@ const PublicFooter = ({ go }) => (
           </p>
           <div style={{ display: 'flex', gap: 20, marginTop: 28 }}>
             {['LinkedIn', 'Instagram', 'Newsletter'].map(l => (
-              <a key={l} href="#" className="vj-link" style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--color-lavender-light)', textDecoration: 'none' }}>{l}</a>
+              <a key={l} href="#" onClick={(e) => e.preventDefault()} title="Link folgt im Live-System" className="vj-link" style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--color-lavender-light)', textDecoration: 'none' }}>{l}</a>
             ))}
           </div>
         </div>
@@ -138,9 +140,10 @@ const PublicFooter = ({ go }) => (
 
 const PublicShell = ({ children, go, route, authed }) => (
   <div>
+    <a href="#main-content" className="vj-skip-link">Zum Hauptinhalt springen</a>
     <ScrollProgress />
     <PublicNav go={go} route={route} authed={authed} />
-    <main>{children}</main>
+    <main id="main-content" role="main">{children}</main>
     <PublicFooter go={go} />
   </div>
 );
@@ -160,33 +163,36 @@ const LearnerNav = ({ go, route }) => {
     { label: 'Account',             route: 'account',    icon: 'user' },
   ];
   return (
-    <nav style={{
+    <nav aria-label="Lernbereich-Navigation" style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       padding: '0 32px',
       height: scrolled ? 60 : 72,
-      background: scrolled ? 'rgba(255,255,255,0.82)' : 'var(--color-bg-card)',
+      background: scrolled ? 'rgba(250,248,255,0.92)' : '#faf8ff',
       backdropFilter: 'saturate(160%) blur(16px)',
       WebkitBackdropFilter: 'saturate(160%) blur(16px)',
+      borderTop: '3px solid var(--color-lavender-deep)',
       borderBottom: '1px solid var(--color-border)',
       position: 'sticky', top: 0, zIndex: 100,
       transition: 'height 320ms cubic-bezier(.2,.8,.2,1), background 320ms ease',
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
-        <Logo onClick={() => go('dashboard')} size={scrolled ? 16 : 18} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
+        <Logo onClick={() => go('dashboard')} size={scrolled ? 16 : 20} />
         <div style={{ width: 1, height: 22, background: 'var(--color-border)' }} />
-        <Tag tone="lavender" style={{ fontSize: 10 }}>Lernbereich</Tag>
+        <Tag tone="lavender" style={{ fontSize: 12, padding: '5px 12px' }}>Lernbereich</Tag>
       </div>
       <ul style={{ display: 'flex', gap: 4, margin: 0, padding: 0, listStyle: 'none' }}>
         {links.map(l => {
           const active = route === l.route || (l.route === 'dashboard' && ['path-overview', 'module-live', 'module-recording'].includes(route));
           return (
             <li key={l.route}>
-              <button onClick={() => go(l.route)} style={{
-                background: active ? 'var(--color-lavender-xlight)' : 'transparent',
+              <button onClick={() => go(l.route)} aria-current={active ? 'page' : undefined} style={{
+                background: active ? 'var(--color-bg-card)' : 'transparent',
                 color: active ? 'var(--color-near-black)' : 'var(--color-fg-secondary)',
-                border: 'none', borderRadius: 9999,
-                padding: '8px 18px', fontSize: 13, fontWeight: 600,
+                border: active ? '1px solid var(--color-border)' : '1px solid transparent',
+                borderRadius: 9999,
+                padding: '8px 18px', fontSize: 13, fontWeight: active ? 700 : 600,
                 display: 'inline-flex', alignItems: 'center', gap: 8, cursor: 'pointer',
+                boxShadow: active ? 'inset 0 -2px 0 var(--color-lavender-deep)' : 'none',
                 transition: 'all 240ms ease',
               }}>
                 <Icon name={l.icon} size={15} />
@@ -197,14 +203,14 @@ const LearnerNav = ({ go, route }) => {
         })}
       </ul>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-        <button className="vj-icon-btn" style={{
+        <button className="vj-icon-btn" aria-label="Benachrichtigungen, ungelesen" aria-live="polite" style={{
           width: 38, height: 38, borderRadius: '50%', background: 'transparent',
           border: '1px solid var(--color-border)', display: 'flex', alignItems: 'center', justifyContent: 'center',
           cursor: 'pointer', color: 'var(--color-fg-secondary)',
           position: 'relative',
         }}>
           <Icon name="bell" size={16} />
-          <span style={{
+          <span aria-hidden="true" style={{
             position: 'absolute', top: 8, right: 9,
             width: 8, height: 8, borderRadius: '50%',
             background: 'var(--color-lavender-oil)',
@@ -212,7 +218,7 @@ const LearnerNav = ({ go, route }) => {
             animation: 'vj-pulse 2.4s ease-in-out infinite',
           }} />
         </button>
-        <button onClick={() => go('account')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <button onClick={() => go('account')} aria-label="Account öffnen" style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}>
           <Avatar name={VJ.user.name} size={36} ring />
           <div style={{ textAlign: 'left' }}>
             <div style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--color-near-black)' }}>{VJ.user.firstName}</div>
@@ -226,8 +232,9 @@ const LearnerNav = ({ go, route }) => {
 
 const LearnerShell = ({ children, go, route }) => (
   <div style={{ background: 'var(--color-bg)', minHeight: '100vh' }}>
+    <a href="#main-content" className="vj-skip-link">Zum Hauptinhalt springen</a>
     <LearnerNav go={go} route={route} />
-    <main>{children}</main>
+    <main id="main-content" role="main">{children}</main>
   </div>
 );
 
@@ -271,15 +278,19 @@ const AdminSidebar = ({ go, route }) => {
             {g.items.map(([r, label, icon]) => {
               const active = route === r || (r === 'admin-courses' && ['admin-course-edit'].includes(route)) || (r === 'admin-modules' && ['admin-module-edit'].includes(route));
               return (
-                <button key={r} onClick={() => go(r)} style={{
+                <button key={r} onClick={() => go(r)} aria-current={active ? 'page' : undefined} style={{
                   width: '100%', textAlign: 'left',
                   display: 'flex', alignItems: 'center', gap: 10,
-                  padding: '9px 12px', borderRadius: 8,
-                  background: active ? 'rgba(213,191,255,0.10)' : 'transparent',
+                  padding: active ? '9px 12px 9px 9px' : '9px 12px',
+                  borderRadius: 8,
+                  background: active ? 'rgba(213,191,255,0.18)' : 'transparent',
                   color: active ? 'var(--color-lavender-light)' : '#cdc8d8',
-                  border: 'none', cursor: 'pointer',
-                  fontSize: 13, fontWeight: 500,
+                  borderLeft: active ? '3px solid var(--color-lavender-oil)' : '3px solid transparent',
+                  borderTop: 'none', borderRight: 'none', borderBottom: 'none',
+                  cursor: 'pointer',
+                  fontSize: 13, fontWeight: active ? 700 : 500,
                   marginBottom: 2,
+                  transition: 'background 200ms ease, color 200ms ease, border-color 200ms ease',
                 }}>
                   <Icon name={icon} size={15} color={active ? 'var(--color-lavender-light)' : '#a09eac'} />
                   {label}
@@ -326,8 +337,9 @@ const AdminTopBar = ({ title, kicker, breadcrumb, actions }) => (
 
 const AdminShell = ({ children, go, route }) => (
   <div style={{ display: 'flex', minHeight: '100vh', background: '#f7f5fb' }}>
+    <a href="#main-content" className="vj-skip-link">Zum Hauptinhalt springen</a>
     <AdminSidebar go={go} route={route} />
-    <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
+    <div id="main-content" role="main" style={{ flex: 1, minWidth: 0 }}>{children}</div>
   </div>
 );
 
