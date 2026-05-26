@@ -7,7 +7,15 @@ const Eyebrow = ({ children, color = 'var(--color-lavender-oil)', style }) => (
   }}>{children}</div>
 );
 
-const Btn = ({ children, variant = 'primary', size = 'md', onClick, style, disabled, type, full, className, ...rest }) => {
+const Btn = (props) => {
+  const {
+    children, variant = 'primary', size = 'md', onClick, style, disabled, type, full, className,
+  } = props;
+  // Forward only DOM-safe attributes (aria-*, data-*, title, role, tabIndex, name, value)
+  const forwardable = Object.fromEntries(Object.entries(props).filter(([k]) =>
+    k.startsWith('aria-') || k.startsWith('data-') ||
+    ['title', 'role', 'tabIndex', 'name', 'value', 'autoFocus', 'form'].includes(k)
+  ));
   const base = {
     border: 'none',
     borderRadius: 9999,
@@ -37,7 +45,7 @@ const Btn = ({ children, variant = 'primary', size = 'md', onClick, style, disab
     <button type={type || 'button'} disabled={disabled} onClick={onClick}
       className={cls}
       style={{ ...base, ...sizes[size], ...variants[variant], ...style }}
-      {...rest}
+      {...forwardable}
     >{children}</button>
   );
 };
